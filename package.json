@@ -1,6 +1,11 @@
 {
   "name": "ecommerce-admin",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "engines": {
+    "npm": "6.9.0",
+    "node": "10.16.3"
+  },
+  "description": "Ecommerce Admin application",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +16,8 @@
     "dev:ssr": "ng run ecommerce-admin:serve-ssr",
     "serve:ssr": "node dist/ecommerce-admin/server/main.js",
     "build:ssr": "ng build --prod && ng run ecommerce-admin:server:production",
-    "prerender": "ng run ecommerce-admin:prerender"
+    "prerender": "ng run ecommerce-admin:prerender",
+    "postinstall": "npm run build:ssr"
   },
   "private": true,
   "dependencies": {
