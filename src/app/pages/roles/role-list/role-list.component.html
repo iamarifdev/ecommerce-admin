@@ -1,0 +1,127 @@
+<div class="custom-inner-wrap">
+  <div class="text-right float-add-menu">
+    <button
+      mat-fab
+      color="primary"
+      class="m-r-5"
+      matTooltip="{{ 'ROLE.ADD_ROLE' }}"
+      matTooltipPosition="above"
+      (click)="addRole()"
+    >
+      <mat-icon class="material-icons">add</mat-icon>
+    </button>
+  </div>
+
+  <mat-card class="mb-1">
+    <mat-card-content>
+      <div class="filter-box" align-items-center fxLayout="row" fxLayout.sm="column" fxLayoutWrap="wrap">
+        <mat-form-field fxFlex="50" appearance="fill">
+          <mat-label>{{ 'ROLE.STATUS' }}</mat-label>
+          <mat-select [(ngModel)]="shouldLoadAll" (selectionChange)="onSelectChange()">
+            <mat-option *ngFor="let item of activeOptions" [value]="item.value">
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="example-container table-responsive">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="sl">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              {{ paginator.pageIndex * paginator.pageSize + (i + 1) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>{{ 'APP.NAME' }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>{{ 'ROLE.DESCRIPTION' }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="isEnabled">
+            <th mat-header-cell *matHeaderCellDef>{{ 'APP.ACTIVE' }}</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-slide-toggle
+                color="primary"
+                [(ngModel)]="element.isEnabled"
+                (change)="changeEnableStatus(element, statusDialog, $event)"
+              >
+              </mat-slide-toggle>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef class="text-center" width="100">
+              {{ 'APP.ACTION' }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <div class="button-row" class="text-center">
+                <button mat-icon-button color="primary" (click)="updateRole(element)">
+                  <mat-icon aria-label="Edit">edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="deleteRole(element, deleteDialog)">
+                  <mat-icon aria-label="Delete">delete_outline</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content>
+      <mat-paginator
+        [length]="dataSource.count"
+        [pageSize]="dataSource.pageSize"
+        [pageSizeOptions]="[10, 20, 25]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #deleteDialog>
+  <h1 mat-dialog-title>{{ 'APP.DELETE_CONFIRM_TITLE' }}</h1>
+  <div mat-dialog-content>
+    <p>{{ 'ROLE.DELETE_PROMPT' }}</p>
+  </div>
+  <div mat-dialog-actions class="text-right mb-0 pb-0 mat-dialog-actions-custom">
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" color="primary" tabindex="2">
+      {{ 'APP.YES' }}
+    </button>
+    <button mat-raised-button [mat-dialog-close]="false" tabindex="-1">
+      {{ 'APP.NO' }}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #statusDialog>
+  <h1 mat-dialog-title>{{ 'APP.STATUS_CONFIRM_TITLE' }}</h1>
+  <div mat-dialog-content>
+    <p>{{ 'ROLE.CHANGE_STATUS_PROMPT' }}</p>
+  </div>
+  <div mat-dialog-actions class="text-right mb-0 pb-0 mat-dialog-actions-custom">
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" color="primary" tabindex="2">
+      {{ 'APP.YES' }}
+    </button>
+    <button mat-raised-button [mat-dialog-close]="false" tabindex="-1">
+      {{ 'APP.NO' }}
+    </button>
+  </div>
+</ng-template>

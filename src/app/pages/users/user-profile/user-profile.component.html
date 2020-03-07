@@ -1,0 +1,229 @@
+<div class="custom-inner-wrap" [formGroup]="profileForm">
+  <mat-card class="mb-2">
+    <mat-card-content>
+      <mat-card-subtitle class="mb-2 custom-subtitle"> {{ 'APP.PROFILE' }}</mat-card-subtitle>
+
+      <div class="filter-box mb-3" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap="wrap">
+        <div class="user-avatar-image mb-3" fxFlex="25">
+          <mat-card-subtitle class="custom-subtitle">
+            {{ 'APP.PROFILE_PIC_MAX' }}
+          </mat-card-subtitle>
+
+          <div class="edit-image-avatar">
+            <i>
+              <img src="{{ rootURL }}" alt="" />
+              <input
+                #upload
+                type="file"
+                name="somename"
+                size="chars"
+                style="cursor: pointer;"
+                class="upload-fab-btn"
+                (change)="handleFileInput($event.target.files)"
+              />
+              <button type="button" mat-mini-fab color="primary" (click)="upload?.click()">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </i>
+          </div>
+        </div>
+
+        <div class="filter-box mb-3" fxLayout="column" fxFlex="70" fxLayoutWrap="wrap">
+          <mat-card-subtitle class="mb-0 custom-subtitle">
+            {{ 'APP.NAME' }}
+          </mat-card-subtitle>
+          <mat-form-field fxFlex>
+            <input matInput type="text" formControlName="fullName" />
+          </mat-form-field>
+        </div>
+
+        <mat-error *ngIf="!isFileSizeValid">
+          {{ 'APP.IMAGE_SIZE' }}
+        </mat-error>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mb-2">
+    <mat-card-content>
+      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'APP.CONTACT_INFORMATION' }}</mat-card-subtitle>
+
+      <div class="filter-box">
+        <div fxLayout="column" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100">
+          <div>
+            <mat-card-subtitle class="mb-0 custom-subtitle">
+              {{ 'APP.EMAIL_ADDRESS' }}
+            </mat-card-subtitle>
+            <mat-form-field>
+              <input matInput type="email" formControlName="email" />
+            </mat-form-field>
+
+            <mat-error
+              *ngIf="
+                (profileForm.controls['email'].dirty || profileForm.controls['email'].touched) &&
+                profileForm.controls['email'].hasError('email') &&
+                !profileForm.controls['email'].hasError('required')
+              "
+            >
+              {{ 'COMPANY.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' }}
+            </mat-error>
+            <mat-error
+              *ngIf="
+                (profileForm.controls['email'].dirty || profileForm.controls['email'].touched) &&
+                profileForm.controls['email'].hasError('required')
+              "
+            >
+              {{ 'COMPANY.EMAIL_IS_REQUIRED' }}
+            </mat-error>
+          </div>
+
+          <div *ngIf="isHap && userData?.emails?.length > 0">
+            <p *ngFor="let item of userData.emails">{{ item }}</p>
+          </div>
+
+          <div>
+            <mat-card-subtitle class="mb-0 custom-subtitle">
+              {{ 'APP.PHONE_NUMBER' }}
+            </mat-card-subtitle>
+
+            <mat-form-field>
+              <input matInput type="text" [OnlyNumber]="true" formControlName="mobileNumber" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mb-2" [formGroup]="passwordForm">
+    <mat-card-content>
+      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'APP.PASSWORD' }}</mat-card-subtitle>
+
+      <div class="filter-box">
+        <div fxLayout="column" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100">
+          <div>
+            <mat-form-field>
+              <input matInput type="password" placeholder="Old password" formControlName="oldPassword" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput type="password" placeholder="New password" formControlName="password" />
+              <mat-error
+                *ngIf="
+                  (passwordForm.controls['password'].dirty || passwordForm.controls['password'].touched) &&
+                  passwordForm.controls['password'].hasError('minlength')
+                "
+              >
+                {{ 'APP.PASSWORD_SHOULD' }} {{ 'APP.CHARS' }}.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput type="password" placeholder="Repeat new password" formControlName="retypePassword" />
+              <mat-error
+                *ngIf="
+                  passwordForm.controls['retypePassword'].hasError('required') &&
+                  passwordForm.controls['retypePassword'].touched
+                "
+              >
+                Repeat password is required
+              </mat-error>
+              <mat-error *ngIf="passwordForm.controls['retypePassword'].errors?.doesMatchPassword">
+                {{ 'APP.PASSWORD_MATCH' }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mb-2" *ngIf="isHap" [formGroup]="addressForm">
+    <mat-card-content>
+      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'ADDRESS.ADD_ADDRESS' }} </mat-card-subtitle>
+
+      <div class="filter-box">
+        <div fxLayout="column" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100">
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="{{ 'COMPANY.STREET' }}" formControlName="street" />
+              <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
+                {{ 'APP.STREET_REQUIRED' }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="{{ 'APP.HOUSE_NUMBER' }}" formControlName="houseNumber" />
+              <mat-error *ngIf="addressForm.controls['houseNumber'].hasError('required')">
+                {{ 'APP.HOUSE_NUMBER_REQUIRED' }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="{{ 'APP.ADDITION' }}" formControlName="addition" />
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <input
+                matInput
+                (keydown.space)="$event.preventDefault()"
+                placeholder="{{ 'APP.ZIP_CODE' }}"
+                formControlName="zipCode"
+              />
+              <mat-error *ngIf="addressForm.controls['zipCode'].hasError('required')">
+                {{ 'APP.ZIP_CODE_REQUIRED' }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="{{ 'COMPANY.CITY' }}" formControlName="city" />
+              <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
+                {{ 'APP.CITY_REQUIRED' }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <button
+    *ngIf="isAddress"
+    class="float-save-btn"
+    mat-fab
+    color="primary"
+    (click)="onSubmit()"
+    matTooltip="Save"
+    matTooltipPosition="above"
+  >
+    <mat-icon aria-label="Save">save</mat-icon>
+  </button>
+
+  <button
+    *ngIf="!isAddress"
+    class="float-save-btn"
+    mat-fab
+    color="primary"
+    [disabled]="
+      (profileForm.pristine && passwordForm.pristine && fileToUpload == null) ||
+      (profileForm.dirty && !profileForm.valid) ||
+      (passwordForm.dirty && !passwordForm.valid) ||
+      (fileToUpload != null && !isFileSizeValid)
+    "
+    (click)="onSubmit()"
+    matTooltip="Save"
+    matTooltipPosition="above"
+  >
+    <mat-icon aria-label="Save">save</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,32 @@
+<div class="container" [class.is-mobile]="mobileQuery.matches">
+  <navbar (toggle)="navService?.toggle()"></navbar>
+  <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+    <mat-sidenav
+      #appDrawer
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+    >
+      <mat-nav-list>
+        <navbar-item *ngFor="let item of navItems" [item]="item"></navbar-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-card>
+        <mat-card-header>
+          <button mat-mini-fab color="primary" class="home-button">
+            <mat-icon>home</mat-icon>
+          </button>
+          <strong>{{ headerMenu?.title }}</strong>
+        </mat-card-header>
+        <mat-card-content>
+          <router-outlet></router-outlet>
+        </mat-card-content>
+      </mat-card>
+      <footer>
+        The copyright is reserved by the authority 2019-2020.
+      </footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

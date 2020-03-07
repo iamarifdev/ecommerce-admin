@@ -1,0 +1,9 @@
+{
+  "APP": {
+    "ACTIVE": "Active"
+  },
+  "ROLE": {
+    "ADD_ROLE": "Add Role",
+    "NAME": "Role Name"
+  }
+}

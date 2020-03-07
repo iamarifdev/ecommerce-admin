@@ -1,0 +1,182 @@
+@import '~@angular/material/theming';
+
+$ecommerce-admin-font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+
+/* For use in src/lib/core/theming/_palette.scss */
+// $ecommerce-admin-primary-palette: (
+//   50: #e7f5ea,
+//   100: #c2e5cb,
+//   200: #9ad4a9,
+//   300: #71c287,
+//   400: #52b56d,
+//   500: #34a853,
+//   600: #2fa04c,
+//   700: #279742,
+//   800: #218d39,
+//   900: #157d29,
+//   A100: #b3ffc0,
+//   A200: #80ff95,
+//   A400: #4dff6b,
+//   A700: #33ff56,
+//   contrast: (
+//     50: #000000,
+//     100: #000000,
+//     200: #000000,
+//     300: #000000,
+//     400: #000000,
+//     500: #ffffff,
+//     600: #ffffff,
+//     700: #ffffff,
+//     800: #ffffff,
+//     900: #ffffff,
+//     A100: #000000,
+//     A200: #000000,
+//     A400: #000000,
+//     A700: #000000
+//   )
+// );
+
+/* For use in src/lib/core/theming/_palette.scss */
+$ecommerce-admin-primary-palette: (
+  50: #e7e9f5,
+  100: #c4c8e6,
+  200: #9ca4d5,
+  300: #7480c4,
+  400: #5764b8,
+  500: #3949ab,
+  600: #3342a4,
+  700: #2c399a,
+  800: #243191,
+  900: #172180,
+  A100: #b8bdff,
+  A200: #858eff,
+  A400: #515fff,
+  A700: #3848ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff
+  )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$ecommerce-admin-info-palette: (
+  50: #e8f0fe,
+  100: #c6dafc,
+  200: #a1c2fa,
+  300: #7baaf7,
+  400: #5e97f6,
+  500: #4285f4,
+  600: #3c7df3,
+  700: #3372f1,
+  800: #2b68ef,
+  900: #1d55ec,
+  A100: #ffffff,
+  A200: #eef2ff,
+  A400: #bbcbff,
+  A700: #a1b8ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$ecommerce-admin-accent-palette: (
+  50: #fcebf0,
+  100: #f9ccd9,
+  200: #f5aabf,
+  300: #f088a5,
+  400: #ed6f92,
+  500: #ea557f,
+  600: #e74e77,
+  700: #e4446c,
+  800: #e13b62,
+  900: #db2a4f,
+  A100: #ffffff,
+  A200: #ffe7ec,
+  A400: #ffb4c2,
+  A700: #ff9bae,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+/* For use in src/lib/core/theming/_palette.scss */
+$ecommerce-admin-warn-palette: (
+  50: #fceae7,
+  100: #f9cac2,
+  200: #f5a799,
+  300: #f08370,
+  400: #ed6952,
+  500: #ea4e33,
+  600: #e7472e,
+  700: #e43d27,
+  800: #e13520,
+  900: #db2514,
+  A100: #ffffff,
+  A200: #ffdad8,
+  A400: #ffaba5,
+  A700: #ff938b,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+
+$ecommerce-admin-primary: mat-palette($ecommerce-admin-primary-palette);
+$ecommerce-admin-info: mat-palette($ecommerce-admin-info-palette);
+$ecommerce-admin-accent: mat-palette($ecommerce-admin-accent-palette);
+$ecommerce-admin-warn: mat-palette($ecommerce-admin-warn-palette);
+
+$primary: mat-color($ecommerce-admin-primary);
+$info: mat-color($ecommerce-admin-info);
+$accent: mat-color($ecommerce-admin-accent);
+$warn: mat-color($ecommerce-admin-warn);

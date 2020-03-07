@@ -1,0 +1,29 @@
+@import '~@angular/material/theming';
+@import './theme/ecommerce-global';
+
+$ecommerce-admin-typography: mat-typography-config(
+  $font-family: $ecommerce-admin-font-family
+);
+
+@include mat-core($ecommerce-admin-typography);
+
+$ecommerce-admin: mat-light-theme($ecommerce-admin-primary, $ecommerce-admin-accent, $ecommerce-admin-warn);
+
+@include angular-material-theme($ecommerce-admin);
+
+.primary {
+  background-color: $primary;
+  color: #ffffff;
+}
+.info {
+  background-color: $info;
+  color: #ffffff;
+}
+.accent {
+  background-color: $accent;
+  color: #ffffff;
+}
+.warn {
+  background-color: $warn;
+  color: #ffffff;
+}

@@ -1,0 +1,229 @@
+<progress-bar></progress-bar>
+
+<div class="modal-wrap">
+  <mat-toolbar-row class="padding-lr-0 mb-3">
+    <h2 class="mb-2">{{ 'USER.EDIT_USER' }}</h2>
+    <div class="close-modal">
+      <mat-icon (click)="dialogRef.close()" aria-label="CANCEL">close</mat-icon>
+    </div>
+  </mat-toolbar-row>
+
+  <form
+    id="userEditForm"
+    [formGroup]="userEditForm"
+    class="filter-box"
+    fxLayout="column"
+    fxLayoutWrap="wrap"
+    (submit)="updateUser()"
+  >
+    <mat-card>
+      <mat-card-content fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'USER.FULL_NAME' }}</mat-label>
+          <input matInput placeholder="{{ 'USER.FULL_NAME' }}" formControlName="fullName" />
+          <mat-error *ngIf="userEditForm.controls['fullName'].hasError('required')">
+            {{ 'USER.FULL_NAME_IS_REQUIRED' }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'USER.USERNAME' }}</mat-label>
+          <input matInput placeholder="{{ 'USER.USERNAME' }}" formControlName="username" autocomplete="off" />
+          <mat-error *ngIf="userEditForm.controls['username'].invalid">
+            <ng-container *ngIf="userEditForm.controls['username'].hasError('required')">
+              {{ 'USER.USERNAME_IS_REQUIRED' }}
+            </ng-container>
+            <ng-container *ngIf="userEditForm.controls['username'].hasError('minlength')">
+              {{ 'USER.USERNAME_MINLENGTH' }}
+            </ng-container>
+            <ng-container *ngIf="userEditForm.controls['username'].hasError('invalidIdentity')">
+              {{ 'USER.USERNAME_EXIST' }}
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'USER.ROLE_ID' }}</mat-label>
+          <mat-select placeholder="{{ 'USER.ROLE_ID' }}" formControlName="roleId">
+            <mat-option *ngFor="let role of roles" [value]="role?.id">{{ role?.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userEditForm.controls['roleId'].hasError('required')">
+            {{ 'USER.ROLE_ID_IS_REQUIRED' }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'USER.PASSWORD' }}</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder="{{ 'USER.PASSWORD' }}"
+            formControlName="password"
+            autocomplete="false"
+          />
+          <mat-error *ngIf="userEditForm.controls['password'].hasError('required')">
+            {{ 'USER.PASSWORD_IS_REQUIRED' }}
+          </mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'USER.EMAIL' }}</mat-label>
+          <input matInput type="email" placeholder="{{ 'USER.EMAIL' }}" formControlName="email" />
+          <mat-error *ngIf="userEditForm.controls['email'].invalid">
+            <ng-container *ngIf="userEditForm.controls['email'].hasError('required')">
+              {{ 'USER.EMAIL_IS_REQUIRED' }}
+            </ng-container>
+            <ng-container *ngIf="userEditForm.controls['email'].hasError('email')">
+              {{ 'USER.EMAIL_ADDRESS' }}
+            </ng-container>
+            <ng-container *ngIf="userEditForm.controls['email'].hasError('invalidIdentity')">
+              {{ 'USER.EMAIL_EXIST' }}
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'USER.CONTACT_PERSON' }}</mat-label>
+          <input matInput placeholder="{{ 'USER.CONTACT_PERSON' }}" formControlName="contactPerson" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'USER.CONTACT_NO' }}</mat-label>
+          <input matInput placeholder="{{ 'USER.CONTACT_NO' }}" formControlName="contactNo" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'USER.REMARKS' }}</mat-label>
+          <input matInput type="remarks" placeholder="{{ 'USER.REMARKS' }}" formControlName="remarks" />
+          <mat-error *ngIf="userEditForm.controls['remarks'].hasError('required')">
+            {{ 'USER.REMARKS_IS_REQUIRED' }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-card fxFlex="100" class="mb-1">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label>{{ 'USER.PHONE_NUMBERS' }}</mat-label>
+            <button type="button" mat-icon-button matTooltip="{{ 'APP.ADD_MORE' }}" (click)="addPhone()">
+              <mat-icon>add_box</mat-icon>
+            </button>
+          </div>
+          <mat-card-content fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
+            <ng-container formArrayName="phoneNumbers" *ngFor="let item of phoneNumbers.controls; let i = index">
+              <ng-container [formGroupName]="i">
+                <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                  <mat-label>{{ 'USER.PHONE_NO' }}</mat-label>
+                  <input matInput placeholder="{{ 'USER.PHONE_NO' }}" formControlName="phoneNo" />
+                  <button
+                    *ngIf="i > 0"
+                    type="button"
+                    matSuffix
+                    mat-icon-button
+                    matTooltip="{{ 'APP.REMOVE' }}"
+                    (click)="removePhone(i)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <mat-error *ngIf="phoneNumbers.controls[i].get('phoneNo').invalid">
+                    <ng-container *ngIf="phoneNumbers.controls[i].get('phoneNo').hasError('required')">
+                      {{ 'USER.PHONE_NO_IS_REQUIRED' }}
+                    </ng-container>
+                    <ng-container *ngIf="phoneNumbers.controls[i].get('phoneNo').hasError('minlength')">
+                      {{ 'USER.PHONE_NO_MINLENGTH' }}
+                    </ng-container>
+                    <ng-container *ngIf="phoneNumbers.controls[i].get('phoneNo').hasError('invalidIdentity')">
+                      {{ 'USER.PHONE_NO_EXIST' }}
+                    </ng-container>
+                  </mat-error>
+                </mat-form-field>
+              </ng-container>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card fxFlex="100" class="mb-1">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label>{{ 'USER.ADDRESSES' }}</mat-label>
+            <button type="button" mat-icon-button matTooltip="{{ 'APP.ADD_MORE' }}" (click)="addAddress()">
+              <mat-icon>add_box</mat-icon>
+            </button>
+          </div>
+
+          <mat-card-content
+            formArrayName="addresses"
+            *ngFor="let item of addresses.controls; let i = index"
+            fxLayout="row wrap"
+            fxFlex.xs="column wrap"
+            fxFlex.sm="column wrap"
+          >
+            <div *ngIf="i > 0" class="mb-1" fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
+              <button
+                *ngIf="i > 0"
+                type="button"
+                matSuffix
+                mat-icon-button
+                matTooltip="{{ 'APP.REMOVE' }}"
+                (click)="removeAddress(i)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <ng-container [formGroupName]="i">
+              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>{{ 'USER.DISTRICT' }}</mat-label>
+                <input matInput placeholder="{{ 'USER.DISTRICT' }}" formControlName="district" />
+                <mat-error *ngIf="addresses.controls[i].get('district').hasError('required')">
+                  {{ 'USER.DISTRICT_IS_REQUIRED' }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>{{ 'USER.THANA' }}</mat-label>
+                <input matInput placeholder="{{ 'USER.THANA' }}" formControlName="thana" />
+                <mat-error *ngIf="addresses.controls[i].get('thana').hasError('required')">
+                  {{ 'USER.THANA_IS_REQUIRED' }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>{{ 'USER.POSTCODE' }}</mat-label>
+                <input matInput placeholder="{{ 'USER.POSTCODE' }}" formControlName="postCode" />
+                <mat-error *ngIf="addresses.controls[i].get('postCode').hasError('required')">
+                  {{ 'USER.POSTCODE_IS_REQUIRED' }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>{{ 'USER.DESCRIPTION' }}</mat-label>
+                <textarea matInput placeholder="{{ 'USER.DESCRIPTION' }}" formControlName="description"></textarea>
+                <mat-error *ngIf="addresses.controls[i].get('description').hasError('required')">
+                  {{ 'USER.DESCRIPTION_IS_REQUIRED' }}
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+
+        <div fxFlex="100" class="padding-lr-5">
+          <mat-checkbox color="primary" formControlName="isEnabled">
+            {{ 'APP.ACTIVE' }}
+          </mat-checkbox>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+
+  <div class="floating-btn-modal">
+    <button
+      type="submit"
+      class="float-save-btn"
+      mat-fab
+      form="userEditForm"
+      [disabled]="!userEditForm.valid || userEditForm.pristine"
+      color="primary"
+      matTooltip="{{ 'APP.SAVE' }}"
+      matTooltipPosition="above"
+    >
+      <mat-icon aria-label="Save">save</mat-icon>
+    </button>
+  </div>
+</div>

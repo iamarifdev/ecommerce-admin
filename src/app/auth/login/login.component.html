@@ -1,0 +1,75 @@
+<div class="custom-inner-wrap">
+  <mat-card [@enter] [@leave] class="login-panel">
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <div fxLayout="column">
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-subtitle class="custom-subtitle">Brothers Communication</mat-card-subtitle>
+      </div>
+      <img src="/assets/images/company-logo.png" height="65" />
+    </div>
+    <mat-card-content>
+      <form
+        [formGroup]="loginForm"
+        id="loginForm"
+        class="filter-box"
+        fxLayout="column"
+        fxLayoutWrap="wrap"
+        (submit)="login()"
+      >
+        <div fxLayout="row" fxLayout="column" fxLayoutWrap="wrap">
+          <mat-form-field fxFlex="100" class="mb-2" appearance="outline">
+            <mat-label>{{ 'LOGIN.USERNAME' }}</mat-label>
+            <input matInput placeholder="{{ 'LOGIN.USERNAME' }}" formControlName="username" />
+            <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+              {{ 'LOGIN.USERNAME_IS_REQUIRED' }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="100" class="mb-2" appearance="outline">
+            <mat-label>{{ 'LOGIN.PASSWORD' }}</mat-label>
+            <input
+              type="{{ showPassword ? 'text' : 'password' }}"
+              matInput
+              placeholder="{{ 'LOGIN.PASSWORD' }}"
+              formControlName="password"
+            />
+            <button
+              type="button"
+              *ngIf="!showPassword"
+              matTooltip="Show password"
+              matSuffix
+              mat-icon-button
+              (click)="togglePasswordVisibility()"
+            >
+              <mat-icon matSuffix>visibility</mat-icon>
+            </button>
+            <button
+              type="button"
+              *ngIf="showPassword"
+              matTooltip="Hide password"
+              matSuffix
+              mat-icon-button
+              (click)="togglePasswordVisibility()"
+            >
+              <mat-icon matSuffix>visibility_off</mat-icon>
+            </button>
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+              {{ 'LOGIN.PASSWORD_IS_REQUIRED' }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+      <div fxLayout="row" fxLayoutAlign="end">
+        <button
+          class="text-right text-uppercase flex-btn"
+          type="submit"
+          form="loginForm"
+          mat-raised-button
+          color="primary"
+        >
+          Login
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,18 @@
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="accent"></mat-progress-bar>
+<mat-toolbar color="primary" class="toolbar">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="onToggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="app-name">Brothers CMS</h1>
+    <span class="spacer"></span>
+    <avatar class="mt-1" [imageSrc]="authUser?.avatarUrl" [matMenuTriggerFor]="menu"></avatar>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>{{ authUser?.username }}</button>
+      <button mat-menu-item>{{ authUser?.fullName }}</button>
+      <button mat-menu-item [routerLink]="['/users/profile']">Profile</button>
+      <button mat-menu-item>Settings</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>

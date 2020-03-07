@@ -1,0 +1,20 @@
+.custom-inner-wrap {
+  position: relative;
+  background-image: url('/assets/images/login-background.jpg');
+  background-size: cover;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-panel {
+  width: 320px;
+
+  .flex-btn {
+    flex: 1;
+    width: 100%;
+  }
+}

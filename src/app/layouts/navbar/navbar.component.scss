@@ -1,0 +1,34 @@
+.mat-progress-bar {
+  position: absolute;
+}
+
+.is-mobile .toolbar {
+  position: fixed;
+  z-index: 2;
+}
+
+h1.app-name {
+  margin-left: 8px;
+}
+
+.mat-toolbar {
+  height: 45px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mat-toolbar-multiple-rows {
+  min-height: unset;
+}
+
+.mat-toolbar-row {
+  height: 45px;
+}
+
+.mat-menu-content:not(:empty) {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  width: 175px;
+}

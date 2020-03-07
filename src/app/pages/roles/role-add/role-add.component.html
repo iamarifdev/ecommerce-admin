@@ -1,0 +1,53 @@
+<div class="modal-wrap">
+  <mat-toolbar-row class="padding-lr-0 mb-3">
+    <h2 class="mb-2">{{ 'ROLE.ADD_ROLE' }}</h2>
+    <div class="close-modal">
+      <mat-icon (click)="dialogRef.close()" aria-label="CANCEL">close</mat-icon>
+    </div>
+  </mat-toolbar-row>
+
+  <form
+    id="roleAddForm"
+    [formGroup]="roleAddForm"
+    class="filter-box"
+    fxLayout="column"
+    fxLayoutWrap="wrap"
+    (submit)="addRole()"
+  >
+    <div fxLayout="row" fxLayout="column" fxLayoutWrap="wrap">
+      <mat-form-field fxFlex="100" class="mb-1" appearance="fill">
+        <mat-label>{{ 'ROLE.NAME' }}</mat-label>
+        <input matInput placeholder="{{ 'ROLE.NAME' }}" formControlName="name" />
+        <mat-error *ngIf="roleAddForm.controls['name'].hasError('required')">
+          {{ 'ROLE.NAME_IS_REQUIRED' }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="100" class="mb-1" appearance="fill">
+        <mat-label>{{ 'ROLE.DESCRIPTION' }}</mat-label>
+        <textarea matInput placeholder="{{ 'ROLE.DESCRIPTION' }}" formControlName="description"></textarea>
+      </mat-form-field>
+
+      <div fxFlex="100" class="padding-lr-5">
+        <mat-checkbox color="primary" formControlName="isEnabled">
+          {{ 'APP.ACTIVE' }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </form>
+
+  <div class="floating-btn-modal">
+    <button
+      type="submit"
+      form="roleAddForm"
+      class="float-save-btn"
+      mat-fab
+      color="primary"
+      [disabled]="!roleAddForm.valid"
+      matTooltip="{{ 'APP.SAVE' }}"
+      matTooltipPosition="above"
+    >
+      <mat-icon aria-label="Save">save</mat-icon>
+    </button>
+  </div>
+</div>
