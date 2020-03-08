@@ -1,6 +1,7 @@
 import 'zone.js/dist/zone-node';
 import 'localstorage-polyfill';
 
+import { enableProdMode } from '@angular/core';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
@@ -11,6 +12,8 @@ import { AppServerModule } from './src/main.server';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
+  enableProdMode();
+
   const server = express();
   const distFolder = join(process.cwd(), 'dist/ecommerce-admin/browser');
 
