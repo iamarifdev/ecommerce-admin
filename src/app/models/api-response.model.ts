@@ -4,7 +4,7 @@ export interface ApiResponse<T = any> {
   message?: string;
 }
 
-export interface ApiPaginatedResponse<T = any> {
+export interface ApiPagedResponse<T = any> {
   success: boolean;
   result?: {
     items: T[];

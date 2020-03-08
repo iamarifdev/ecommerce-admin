@@ -18,19 +18,19 @@
       >
         <div fxLayout="row" fxLayout="column" fxLayoutWrap="wrap">
           <mat-form-field fxFlex="100" class="mb-2" appearance="outline">
-            <mat-label>{{ 'LOGIN.USERNAME' }}</mat-label>
-            <input matInput placeholder="{{ 'LOGIN.USERNAME' }}" formControlName="username" />
+            <mat-label>{{ 'LOGIN.USERNAME' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'LOGIN.USERNAME' | translate }}" formControlName="username" />
             <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
-              {{ 'LOGIN.USERNAME_IS_REQUIRED' }}
+              {{ 'LOGIN.USERNAME_IS_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="100" class="mb-2" appearance="outline">
-            <mat-label>{{ 'LOGIN.PASSWORD' }}</mat-label>
+            <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
             <input
-              type="{{ showPassword ? 'text' : 'password' }}"
+              type="{{ showPassword ? 'text' : ('password' | translate) }}"
               matInput
-              placeholder="{{ 'LOGIN.PASSWORD' }}"
+              placeholder="{{ 'LOGIN.PASSWORD' | translate }}"
               formControlName="password"
             />
             <button
@@ -54,7 +54,7 @@
               <mat-icon matSuffix>visibility_off</mat-icon>
             </button>
             <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
-              {{ 'LOGIN.PASSWORD_IS_REQUIRED' }}
+              {{ 'LOGIN.PASSWORD_IS_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
         </div>

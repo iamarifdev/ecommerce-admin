@@ -1,6 +1,6 @@
 <div class="modal-wrap">
   <mat-toolbar-row class="padding-lr-0 mb-3">
-    <h2 class="mb-2">{{ 'ROLE.EDIT_ROLE' }}</h2>
+    <h2 class="mb-2">{{ 'ROLE.EDIT_ROLE' | translate }}</h2>
     <div class="close-modal">
       <mat-icon (click)="dialogRef.close()" aria-label="CANCEL">close</mat-icon>
     </div>
@@ -16,21 +16,21 @@
   >
     <div fxLayout="row" fxLayout="column" fxLayoutWrap="wrap">
       <mat-form-field fxFlex="100" class="mb-1" appearance="fill">
-        <mat-label>{{ 'ROLE.NAME' }}</mat-label>
-        <input matInput placeholder="{{ 'ROLE.NAME' }}" formControlName="name" />
+        <mat-label>{{ 'ROLE.NAME' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'ROLE.NAME' | translate }}" formControlName="name" />
         <mat-error *ngIf="roleEditForm.controls['name'].hasError('required')">
-          {{ 'ROLE.NAME_IS_REQUIRED' }}
+          {{ 'ROLE.NAME_IS_REQUIRED' | translate }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="100" class="mb-1" appearance="fill">
-        <mat-label>{{ 'ROLE.DESCRIPTION' }}</mat-label>
-        <textarea matInput placeholder="{{ 'ROLE.DESCRIPTION' }}" formControlName="description"></textarea>
+        <mat-label>{{ 'ROLE.DESCRIPTION' | translate }}</mat-label>
+        <textarea matInput placeholder="{{ 'ROLE.DESCRIPTION' | translate }}" formControlName="description"></textarea>
       </mat-form-field>
 
       <div fxFlex="100" class="padding-lr-5">
         <mat-checkbox color="primary" formControlName="isEnabled">
-          {{ 'APP.ACTIVE' }}
+          {{ 'APP.ACTIVE' | translate }}
         </mat-checkbox>
       </div>
     </div>
@@ -44,7 +44,7 @@
       mat-fab
       color="primary"
       [disabled]="!roleEditForm.valid"
-      matTooltip="{{ 'APP.SAVE' }}"
+      matTooltip="{{ 'APP.SAVE' | translate }}"
       matTooltipPosition="above"
     >
       <mat-icon aria-label="Save">save</mat-icon>

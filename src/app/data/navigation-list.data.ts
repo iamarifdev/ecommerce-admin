@@ -12,31 +12,6 @@ export class NavigationList {
             displayName: 'Dashboard',
             iconName: 'dashboard',
             route: 'dashboard'
-          },
-          {
-            displayName: 'Login Message',
-            iconName: 'dashboard',
-            route: 'dashboard/login-message'
-          },
-          {
-            displayName: 'Online Users (All)',
-            iconName: 'dashboard',
-            route: 'dashboard/online-users/all'
-          },
-          {
-            displayName: 'Users by Interface',
-            iconName: 'dashboard',
-            route: 'dashboard/users/interface/:interface'
-          },
-          {
-            displayName: 'Radius Status',
-            iconName: 'dashboard',
-            route: 'dashboard/radius/status'
-          },
-          {
-            displayName: 'Online Users',
-            iconName: 'dashboard',
-            route: 'dashboard/online-users'
           }
         ]
       },
@@ -44,6 +19,11 @@ export class NavigationList {
         displayName: 'Roles',
         iconName: 'group',
         route: 'roles'
+      },
+      {
+        displayName: 'Products',
+        iconName: 'format_list_bulleted',
+        route: 'products'
       },
       {
         displayName: 'Users',

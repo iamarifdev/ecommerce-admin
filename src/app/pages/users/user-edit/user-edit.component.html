@@ -2,7 +2,7 @@
 
 <div class="modal-wrap">
   <mat-toolbar-row class="padding-lr-0 mb-3">
-    <h2 class="mb-2">{{ 'USER.EDIT_USER' }}</h2>
+    <h2 class="mb-2">{{ 'USER.EDIT_USER' | translate }}</h2>
     <div class="close-modal">
       <mat-icon (click)="dialogRef.close()" aria-label="CANCEL">close</mat-icon>
     </div>
@@ -19,91 +19,96 @@
     <mat-card>
       <mat-card-content fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'USER.FULL_NAME' }}</mat-label>
-          <input matInput placeholder="{{ 'USER.FULL_NAME' }}" formControlName="fullName" />
+          <mat-label>{{ 'USER.FULL_NAME' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'USER.FULL_NAME' | translate }}" formControlName="fullName" />
           <mat-error *ngIf="userEditForm.controls['fullName'].hasError('required')">
-            {{ 'USER.FULL_NAME_IS_REQUIRED' }}
+            {{ 'USER.FULL_NAME_IS_REQUIRED' | translate }}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'USER.USERNAME' }}</mat-label>
-          <input matInput placeholder="{{ 'USER.USERNAME' }}" formControlName="username" autocomplete="off" />
+          <mat-label>{{ 'USER.USERNAME' | translate }}</mat-label>
+          <input
+            matInput
+            placeholder="{{ 'USER.USERNAME' | translate }}"
+            formControlName="username"
+            autocomplete="off"
+          />
           <mat-error *ngIf="userEditForm.controls['username'].invalid">
             <ng-container *ngIf="userEditForm.controls['username'].hasError('required')">
-              {{ 'USER.USERNAME_IS_REQUIRED' }}
+              {{ 'USER.USERNAME_IS_REQUIRED' | translate }}
             </ng-container>
             <ng-container *ngIf="userEditForm.controls['username'].hasError('minlength')">
-              {{ 'USER.USERNAME_MINLENGTH' }}
+              {{ 'USER.USERNAME_MINLENGTH' | translate }}
             </ng-container>
             <ng-container *ngIf="userEditForm.controls['username'].hasError('invalidIdentity')">
-              {{ 'USER.USERNAME_EXIST' }}
+              {{ 'USER.USERNAME_EXIST' | translate }}
             </ng-container>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'USER.ROLE_ID' }}</mat-label>
-          <mat-select placeholder="{{ 'USER.ROLE_ID' }}" formControlName="roleId">
+          <mat-label>{{ 'USER.ROLE_ID' | translate }}</mat-label>
+          <mat-select placeholder="{{ 'USER.ROLE_ID' | translate }}" formControlName="roleId">
             <mat-option *ngFor="let role of roles" [value]="role?.id">{{ role?.name }}</mat-option>
           </mat-select>
           <mat-error *ngIf="userEditForm.controls['roleId'].hasError('required')">
-            {{ 'USER.ROLE_ID_IS_REQUIRED' }}
+            {{ 'USER.ROLE_ID_IS_REQUIRED' | translate }}
           </mat-error>
         </mat-form-field>
 
         <!-- <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'USER.PASSWORD' }}</mat-label>
+          <mat-label>{{ 'USER.PASSWORD' | translate }}</mat-label>
           <input
             matInput
             type="password"
-            placeholder="{{ 'USER.PASSWORD' }}"
+            placeholder="{{ 'USER.PASSWORD' | translate }}"
             formControlName="password"
             autocomplete="false"
           />
           <mat-error *ngIf="userEditForm.controls['password'].hasError('required')">
-            {{ 'USER.PASSWORD_IS_REQUIRED' }}
+            {{ 'USER.PASSWORD_IS_REQUIRED' | translate }}
           </mat-error>
         </mat-form-field> -->
 
         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'USER.EMAIL' }}</mat-label>
-          <input matInput type="email" placeholder="{{ 'USER.EMAIL' }}" formControlName="email" />
+          <mat-label>{{ 'USER.EMAIL' | translate }}</mat-label>
+          <input matInput type="email" placeholder="{{ 'USER.EMAIL' | translate }}" formControlName="email" />
           <mat-error *ngIf="userEditForm.controls['email'].invalid">
             <ng-container *ngIf="userEditForm.controls['email'].hasError('required')">
-              {{ 'USER.EMAIL_IS_REQUIRED' }}
+              {{ 'USER.EMAIL_IS_REQUIRED' | translate }}
             </ng-container>
             <ng-container *ngIf="userEditForm.controls['email'].hasError('email')">
-              {{ 'USER.EMAIL_ADDRESS' }}
+              {{ 'USER.EMAIL_ADDRESS' | translate }}
             </ng-container>
             <ng-container *ngIf="userEditForm.controls['email'].hasError('invalidIdentity')">
-              {{ 'USER.EMAIL_EXIST' }}
+              {{ 'USER.EMAIL_EXIST' | translate }}
             </ng-container>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'USER.CONTACT_PERSON' }}</mat-label>
-          <input matInput placeholder="{{ 'USER.CONTACT_PERSON' }}" formControlName="contactPerson" />
+          <mat-label>{{ 'USER.CONTACT_PERSON' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'USER.CONTACT_PERSON' | translate }}" formControlName="contactPerson" />
         </mat-form-field>
 
         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'USER.CONTACT_NO' }}</mat-label>
-          <input matInput placeholder="{{ 'USER.CONTACT_NO' }}" formControlName="contactNo" />
+          <mat-label>{{ 'USER.CONTACT_NO' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'USER.CONTACT_NO' | translate }}" formControlName="contactNo" />
         </mat-form-field>
 
         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'USER.REMARKS' }}</mat-label>
-          <input matInput type="remarks" placeholder="{{ 'USER.REMARKS' }}" formControlName="remarks" />
+          <mat-label>{{ 'USER.REMARKS' | translate }}</mat-label>
+          <input matInput type="remarks" placeholder="{{ 'USER.REMARKS' | translate }}" formControlName="remarks" />
           <mat-error *ngIf="userEditForm.controls['remarks'].hasError('required')">
-            {{ 'USER.REMARKS_IS_REQUIRED' }}
+            {{ 'USER.REMARKS_IS_REQUIRED' | translate }}
           </mat-error>
         </mat-form-field>
 
         <mat-card fxFlex="100" class="mb-1">
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label>{{ 'USER.PHONE_NUMBERS' }}</mat-label>
-            <button type="button" mat-icon-button matTooltip="{{ 'APP.ADD_MORE' }}" (click)="addPhone()">
+            <mat-label>{{ 'USER.PHONE_NUMBERS' | translate }}</mat-label>
+            <button type="button" mat-icon-button matTooltip="{{ 'APP.ADD_MORE' | translate }}" (click)="addPhone()">
               <mat-icon>add_box</mat-icon>
             </button>
           </div>
@@ -111,27 +116,27 @@
             <ng-container formArrayName="phoneNumbers" *ngFor="let item of phoneNumbers.controls; let i = index">
               <ng-container [formGroupName]="i">
                 <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-                  <mat-label>{{ 'USER.PHONE_NO' }}</mat-label>
-                  <input matInput placeholder="{{ 'USER.PHONE_NO' }}" formControlName="phoneNo" />
+                  <mat-label>{{ 'USER.PHONE_NO' | translate }}</mat-label>
+                  <input matInput placeholder="{{ 'USER.PHONE_NO' | translate }}" formControlName="phoneNo" />
                   <button
                     *ngIf="i > 0"
                     type="button"
                     matSuffix
                     mat-icon-button
-                    matTooltip="{{ 'APP.REMOVE' }}"
+                    matTooltip="{{ 'APP.REMOVE' | translate }}"
                     (click)="removePhone(i)"
                   >
                     <mat-icon>delete</mat-icon>
                   </button>
                   <mat-error *ngIf="phoneNumbers.controls[i].get('phoneNo').invalid">
                     <ng-container *ngIf="phoneNumbers.controls[i].get('phoneNo').hasError('required')">
-                      {{ 'USER.PHONE_NO_IS_REQUIRED' }}
+                      {{ 'USER.PHONE_NO_IS_REQUIRED' | translate }}
                     </ng-container>
                     <ng-container *ngIf="phoneNumbers.controls[i].get('phoneNo').hasError('minlength')">
-                      {{ 'USER.PHONE_NO_MINLENGTH' }}
+                      {{ 'USER.PHONE_NO_MINLENGTH' | translate }}
                     </ng-container>
                     <ng-container *ngIf="phoneNumbers.controls[i].get('phoneNo').hasError('invalidIdentity')">
-                      {{ 'USER.PHONE_NO_EXIST' }}
+                      {{ 'USER.PHONE_NO_EXIST' | translate }}
                     </ng-container>
                   </mat-error>
                 </mat-form-field>
@@ -142,8 +147,8 @@
 
         <mat-card fxFlex="100" class="mb-1">
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label>{{ 'USER.ADDRESSES' }}</mat-label>
-            <button type="button" mat-icon-button matTooltip="{{ 'APP.ADD_MORE' }}" (click)="addAddress()">
+            <mat-label>{{ 'USER.ADDRESSES' | translate }}</mat-label>
+            <button type="button" mat-icon-button matTooltip="{{ 'APP.ADD_MORE' | translate }}" (click)="addAddress()">
               <mat-icon>add_box</mat-icon>
             </button>
           </div>
@@ -161,7 +166,7 @@
                 type="button"
                 matSuffix
                 mat-icon-button
-                matTooltip="{{ 'APP.REMOVE' }}"
+                matTooltip="{{ 'APP.REMOVE' | translate }}"
                 (click)="removeAddress(i)"
               >
                 <mat-icon>delete</mat-icon>
@@ -169,34 +174,38 @@
             </div>
             <ng-container [formGroupName]="i">
               <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-                <mat-label>{{ 'USER.DISTRICT' }}</mat-label>
-                <input matInput placeholder="{{ 'USER.DISTRICT' }}" formControlName="district" />
+                <mat-label>{{ 'USER.DISTRICT' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'USER.DISTRICT' | translate }}" formControlName="district" />
                 <mat-error *ngIf="addresses.controls[i].get('district').hasError('required')">
-                  {{ 'USER.DISTRICT_IS_REQUIRED' }}
+                  {{ 'USER.DISTRICT_IS_REQUIRED' | translate }}
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-                <mat-label>{{ 'USER.THANA' }}</mat-label>
-                <input matInput placeholder="{{ 'USER.THANA' }}" formControlName="thana" />
+                <mat-label>{{ 'USER.THANA' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'USER.THANA' | translate }}" formControlName="thana" />
                 <mat-error *ngIf="addresses.controls[i].get('thana').hasError('required')">
-                  {{ 'USER.THANA_IS_REQUIRED' }}
+                  {{ 'USER.THANA_IS_REQUIRED' | translate }}
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-                <mat-label>{{ 'USER.POSTCODE' }}</mat-label>
-                <input matInput placeholder="{{ 'USER.POSTCODE' }}" formControlName="postCode" />
+                <mat-label>{{ 'USER.POSTCODE' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'USER.POSTCODE' | translate }}" formControlName="postCode" />
                 <mat-error *ngIf="addresses.controls[i].get('postCode').hasError('required')">
-                  {{ 'USER.POSTCODE_IS_REQUIRED' }}
+                  {{ 'USER.POSTCODE_IS_REQUIRED' | translate }}
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-                <mat-label>{{ 'USER.DESCRIPTION' }}</mat-label>
-                <textarea matInput placeholder="{{ 'USER.DESCRIPTION' }}" formControlName="description"></textarea>
+                <mat-label>{{ 'USER.DESCRIPTION' | translate }}</mat-label>
+                <textarea
+                  matInput
+                  placeholder="{{ 'USER.DESCRIPTION' | translate }}"
+                  formControlName="description"
+                ></textarea>
                 <mat-error *ngIf="addresses.controls[i].get('description').hasError('required')">
-                  {{ 'USER.DESCRIPTION_IS_REQUIRED' }}
+                  {{ 'USER.DESCRIPTION_IS_REQUIRED' | translate }}
                 </mat-error>
               </mat-form-field>
             </ng-container>
@@ -205,7 +214,7 @@
 
         <div fxFlex="100" class="padding-lr-5">
           <mat-checkbox color="primary" formControlName="isEnabled">
-            {{ 'APP.ACTIVE' }}
+            {{ 'APP.ACTIVE' | translate }}
           </mat-checkbox>
         </div>
       </mat-card-content>
@@ -220,7 +229,7 @@
       form="userEditForm"
       [disabled]="!userEditForm.valid || userEditForm.pristine"
       color="primary"
-      matTooltip="{{ 'APP.SAVE' }}"
+      matTooltip="{{ 'APP.SAVE' | translate }}"
       matTooltipPosition="above"
     >
       <mat-icon aria-label="Save">save</mat-icon>

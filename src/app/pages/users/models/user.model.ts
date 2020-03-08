@@ -1,4 +1,4 @@
-export interface User extends Document {
+export interface User {
   id: any;
   companyId?: string;
   roleId: string;

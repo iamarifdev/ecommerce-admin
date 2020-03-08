@@ -1,12 +1,12 @@
 <div class="custom-inner-wrap" [formGroup]="profileForm">
   <mat-card class="mb-2">
     <mat-card-content>
-      <mat-card-subtitle class="mb-2 custom-subtitle"> {{ 'APP.PROFILE' }}</mat-card-subtitle>
+      <mat-card-subtitle class="mb-2 custom-subtitle"> {{ 'APP.PROFILE' | translate }}</mat-card-subtitle>
 
       <div class="filter-box mb-3" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap="wrap">
         <div class="user-avatar-image mb-3" fxFlex="25">
           <mat-card-subtitle class="custom-subtitle">
-            {{ 'APP.PROFILE_PIC_MAX' }}
+            {{ 'APP.PROFILE_PIC_MAX' | translate }}
           </mat-card-subtitle>
 
           <div class="edit-image-avatar">
@@ -30,7 +30,7 @@
 
         <div class="filter-box mb-3" fxLayout="column" fxFlex="70" fxLayoutWrap="wrap">
           <mat-card-subtitle class="mb-0 custom-subtitle">
-            {{ 'APP.NAME' }}
+            {{ 'APP.NAME' | translate }}
           </mat-card-subtitle>
           <mat-form-field fxFlex>
             <input matInput type="text" formControlName="fullName" />
@@ -38,7 +38,7 @@
         </div>
 
         <mat-error *ngIf="!isFileSizeValid">
-          {{ 'APP.IMAGE_SIZE' }}
+          {{ 'APP.IMAGE_SIZE' | translate }}
         </mat-error>
       </div>
     </mat-card-content>
@@ -46,13 +46,13 @@
 
   <mat-card class="mb-2">
     <mat-card-content>
-      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'APP.CONTACT_INFORMATION' }}</mat-card-subtitle>
+      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'APP.CONTACT_INFORMATION' | translate }}</mat-card-subtitle>
 
       <div class="filter-box">
         <div fxLayout="column" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100">
           <div>
             <mat-card-subtitle class="mb-0 custom-subtitle">
-              {{ 'APP.EMAIL_ADDRESS' }}
+              {{ 'APP.EMAIL_ADDRESS' | translate }}
             </mat-card-subtitle>
             <mat-form-field>
               <input matInput type="email" formControlName="email" />
@@ -65,7 +65,7 @@
                 !profileForm.controls['email'].hasError('required')
               "
             >
-              {{ 'COMPANY.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' }}
+              {{ 'COMPANY.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS' | translate }}
             </mat-error>
             <mat-error
               *ngIf="
@@ -73,7 +73,7 @@
                 profileForm.controls['email'].hasError('required')
               "
             >
-              {{ 'COMPANY.EMAIL_IS_REQUIRED' }}
+              {{ 'COMPANY.EMAIL_IS_REQUIRED' | translate }}
             </mat-error>
           </div>
 
@@ -83,7 +83,7 @@
 
           <div>
             <mat-card-subtitle class="mb-0 custom-subtitle">
-              {{ 'APP.PHONE_NUMBER' }}
+              {{ 'APP.PHONE_NUMBER' | translate }}
             </mat-card-subtitle>
 
             <mat-form-field>
@@ -97,7 +97,7 @@
 
   <mat-card class="mb-2" [formGroup]="passwordForm">
     <mat-card-content>
-      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'APP.PASSWORD' }}</mat-card-subtitle>
+      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'APP.PASSWORD' | translate }}</mat-card-subtitle>
 
       <div class="filter-box">
         <div fxLayout="column" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100">
@@ -115,7 +115,7 @@
                   passwordForm.controls['password'].hasError('minlength')
                 "
               >
-                {{ 'APP.PASSWORD_SHOULD' }} {{ 'APP.CHARS' }}.
+                {{ 'APP.PASSWORD_SHOULD' | translate }} {{ 'APP.CHARS' | translate }}.
               </mat-error>
             </mat-form-field>
           </div>
@@ -131,7 +131,7 @@
                 Repeat password is required
               </mat-error>
               <mat-error *ngIf="passwordForm.controls['retypePassword'].errors?.doesMatchPassword">
-                {{ 'APP.PASSWORD_MATCH' }}
+                {{ 'APP.PASSWORD_MATCH' | translate }}
               </mat-error>
             </mat-form-field>
           </div>
@@ -142,31 +142,31 @@
 
   <mat-card class="mb-2" *ngIf="isHap" [formGroup]="addressForm">
     <mat-card-content>
-      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'ADDRESS.ADD_ADDRESS' }} </mat-card-subtitle>
+      <mat-card-subtitle class="mb-1 custom-subtitle"> {{ 'ADDRESS.ADD_ADDRESS' | translate }} </mat-card-subtitle>
 
       <div class="filter-box">
         <div fxLayout="column" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100">
           <div>
             <mat-form-field>
-              <input matInput placeholder="{{ 'COMPANY.STREET' }}" formControlName="street" />
+              <input matInput placeholder="{{ 'COMPANY.STREET' | translate }}" formControlName="street" />
               <mat-error *ngIf="addressForm.controls['street'].hasError('required')">
-                {{ 'APP.STREET_REQUIRED' }}
+                {{ 'APP.STREET_REQUIRED' | translate }}
               </mat-error>
             </mat-form-field>
           </div>
 
           <div>
             <mat-form-field>
-              <input matInput placeholder="{{ 'APP.HOUSE_NUMBER' }}" formControlName="houseNumber" />
+              <input matInput placeholder="{{ 'APP.HOUSE_NUMBER' | translate }}" formControlName="houseNumber" />
               <mat-error *ngIf="addressForm.controls['houseNumber'].hasError('required')">
-                {{ 'APP.HOUSE_NUMBER_REQUIRED' }}
+                {{ 'APP.HOUSE_NUMBER_REQUIRED' | translate }}
               </mat-error>
             </mat-form-field>
           </div>
 
           <div>
             <mat-form-field>
-              <input matInput placeholder="{{ 'APP.ADDITION' }}" formControlName="addition" />
+              <input matInput placeholder="{{ 'APP.ADDITION' | translate }}" formControlName="addition" />
             </mat-form-field>
           </div>
 
@@ -175,20 +175,20 @@
               <input
                 matInput
                 (keydown.space)="$event.preventDefault()"
-                placeholder="{{ 'APP.ZIP_CODE' }}"
+                placeholder="{{ 'APP.ZIP_CODE' | translate }}"
                 formControlName="zipCode"
               />
               <mat-error *ngIf="addressForm.controls['zipCode'].hasError('required')">
-                {{ 'APP.ZIP_CODE_REQUIRED' }}
+                {{ 'APP.ZIP_CODE_REQUIRED' | translate }}
               </mat-error>
             </mat-form-field>
           </div>
 
           <div>
             <mat-form-field>
-              <input matInput placeholder="{{ 'COMPANY.CITY' }}" formControlName="city" />
+              <input matInput placeholder="{{ 'COMPANY.CITY' | translate }}" formControlName="city" />
               <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
-                {{ 'APP.CITY_REQUIRED' }}
+                {{ 'APP.CITY_REQUIRED' | translate }}
               </mat-error>
             </mat-form-field>
           </div>

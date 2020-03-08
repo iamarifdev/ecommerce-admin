@@ -13,6 +13,7 @@ import {
 import { SumPipe, TimeAgoPipe, TimestampPipe, ConcatPipe } from './pipes';
 import { UtilityService, DialogService, AsyncService, AsyncValidationService } from './services';
 import { ParticlesComponent, AvatarComponent, ConfirmationDialogComponent, ProgressBarComponent } from './components';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -31,12 +32,13 @@ import { ParticlesComponent, AvatarComponent, ConfirmationDialogComponent, Progr
     TimestampPipe
   ],
   entryComponents: [ConfirmationDialogComponent],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialModule, TranslateModule],
   exports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,
+    TranslateModule,
     SpinnerComponent,
     ParticlesComponent,
     AvatarComponent,

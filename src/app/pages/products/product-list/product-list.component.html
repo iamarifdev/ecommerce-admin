@@ -4,9 +4,9 @@
       mat-fab
       color="primary"
       class="m-r-5"
-      matTooltip="{{ 'USER.ADD_USER' | translate }}"
+      matTooltip="{{ 'PRODUCT.ADD_PRODUCT' | translate }}"
       matTooltipPosition="above"
-      (click)="addUser()"
+      (click)="navigateAddProduct()"
     >
       <mat-icon class="material-icons">add</mat-icon>
     </button>
@@ -15,8 +15,8 @@
   <mat-card class="mb-1">
     <mat-card-content>
       <div class="filter-box" align-items-center fxLayout="row" fxLayout.sm="column" fxLayoutWrap="wrap">
-        <mat-form-field fxFlex="50" appearance="fill">
-          <mat-label>{{ 'USER.STATUS' | translate }}</mat-label>
+        <mat-form-field fxFlex="15" appearance="fill">
+          <mat-label>{{ 'PRODUCT.STATUS' | translate }}</mat-label>
           <mat-select [(ngModel)]="shouldLoadAll" (selectionChange)="onSelectChange()">
             <mat-option *ngFor="let item of activeOptions" [value]="item.value">
               {{ item.name }}
@@ -41,41 +41,46 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="fullName">
-            <th mat-header-cell *matHeaderCellDef>{{ 'USER.FULL_NAME' | translate }}</th>
-            <td mat-cell *matCellDef="let element">{{ element.fullName }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="username">
-            <th mat-header-cell *matHeaderCellDef>{{ 'USER.USERNAME' | translate }}</th>
-            <td mat-cell *matCellDef="let element">{{ element.username }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef>{{ 'USER.ROLE' | translate }}</th>
-            <td mat-cell *matCellDef="let element">{{ element.roleId?.name }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>{{ 'USER.EMAIL' | translate }}</th>
-            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="phoneNumbers">
-            <th mat-header-cell *matHeaderCellDef>{{ 'USER.PHONE_NUMBERS' | translate }}</th>
+          <ng-container matColumnDef="featureImageUrl">
+            <th mat-header-cell *matHeaderCellDef>{{ 'PRODUCT.FEATURE_IMAGE' | translate }}</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.phoneNumbers | concat: 'phoneNo' | translate }}
+              <img [src]="element.featureImageUrl" width="100" height="100" />
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="remarks">
-            <th mat-header-cell *matHeaderCellDef>{{ 'USER.REMARKS' | translate }}</th>
-            <td mat-cell *matCellDef="let element">{{ element.remarks }}</td>
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>{{ 'PRODUCT.TITLE' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>{{ 'PRODUCT.DESCRIPTION' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="sku">
+            <th mat-header-cell *matHeaderCellDef>{{ 'PRODUCT.SKU' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.sku }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="manufactureDetail">
+            <th mat-header-cell *matHeaderCellDef>{{ 'PRODUCT.MANUFACTURE_DETAIL' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.manufactureDetail?.modelNo }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="pricing">
+            <th mat-header-cell *matHeaderCellDef>{{ 'PRODUCT.PRICE' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.pricing?.price }}</td>
           </ng-container>
 
           <ng-container matColumnDef="createdAt">
-            <th mat-header-cell *matHeaderCellDef>{{ 'USER.CREATED_AT' | translate }}</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'PRODUCT.CREATED_AT' | translate }}</th>
             <td mat-cell *matCellDef="let element">{{ element.createdAt | date: 'dd/MM/yyyy' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="updatedAt">
+            <th mat-header-cell *matHeaderCellDef>{{ 'PRODUCT.UPDATED_AT' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.updatedAt | date: 'dd/MM/yyyy' }}</td>
           </ng-container>
 
           <ng-container matColumnDef="isEnabled">
@@ -96,10 +101,10 @@
             </th>
             <td mat-cell *matCellDef="let element" class="text-center">
               <div class="button-row" class="text-center">
-                <button mat-icon-button color="primary" (click)="updateUser(element)">
+                <button mat-icon-button color="primary" (click)="navigateUpdateProduct(element)">
                   <mat-icon aria-label="Edit">edit</mat-icon>
                 </button>
-                <button mat-icon-button (click)="deleteUser(element, deleteDialog)">
+                <button mat-icon-button (click)="deleteProduct(element, deleteDialog)">
                   <mat-icon aria-label="Delete">delete_outline</mat-icon>
                 </button>
               </div>
@@ -126,7 +131,7 @@
 <ng-template #deleteDialog>
   <h1 mat-dialog-title>{{ 'APP.DELETE_CONFIRM_TITLE' | translate }}</h1>
   <div mat-dialog-content>
-    <p>{{ 'USER.DELETE_PROMPT' | translate }}</p>
+    <p>{{ 'PRODUCT.DELETE_PROMPT' | translate }}</p>
   </div>
   <div mat-dialog-actions class="text-right mb-0 pb-0 mat-dialog-actions-custom">
     <button mat-raised-button color="primary" [mat-dialog-close]="true" color="primary" tabindex="2">
@@ -141,7 +146,7 @@
 <ng-template #statusDialog>
   <h1 mat-dialog-title>{{ 'APP.STATUS_CONFIRM_TITLE' | translate }}</h1>
   <div mat-dialog-content>
-    <p>{{ 'USER.CHANGE_STATUS_PROMPT' | translate }}</p>
+    <p>{{ 'PRODUCT.CHANGE_STATUS_PROMPT' | translate }}</p>
   </div>
   <div mat-dialog-actions class="text-right mb-0 pb-0 mat-dialog-actions-custom">
     <button mat-raised-button color="primary" [mat-dialog-close]="true" color="primary" tabindex="2">

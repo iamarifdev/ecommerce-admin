@@ -1,9 +1,12 @@
 import { NgModule, Inject, PLATFORM_ID, APP_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { SharedModule } from './shared/shared.module';
 import { RefreshTokenInterceptor } from './shared/interceptors/refresh-token.interceptor';
@@ -22,6 +25,11 @@ import { LoginComponent } from './auth/login/login.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthComponent } from './auth/auth.component';
+import { PaginatorI18n } from './shared/paginator/paginator-i18n';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -39,12 +47,28 @@ import { AuthComponent } from './auth/auth.component';
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     AppRoutingModule
   ],
   providers: [
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: { duration: environment.SNACKBAR_DURATION }
+    },
+    {
+      provide: MatPaginatorIntl,
+      deps: [TranslateService],
+      useFactory: (translate: TranslateService) => {
+        const paginator = new PaginatorI18n();
+        paginator.injectTranslateService(translate);
+        return paginator;
+      }
     },
     { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
     NavService,
@@ -59,7 +83,14 @@ import { AuthComponent } from './auth/auth.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(@Inject(PLATFORM_ID) private platformId: object, @Inject(APP_ID) private appId: string) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(APP_ID) private appId: string,
+    private translate: TranslateService
+  ) {
+    this.translate.addLangs(['en', 'nl']);
+    this.translate.setDefaultLang(environment.DEFAULT_LANG);
+    this.translate.use(environment.DEFAULT_LANG);
     const platform = isPlatformBrowser(platformId) ? 'in the browser' : 'on the server';
     console.log(`Running ${platform} with appId=${appId}`);
   }

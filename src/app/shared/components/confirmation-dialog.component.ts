@@ -14,10 +14,10 @@ import { DialogData } from '../../models/dialog-data.model';
     </div>
     <div mat-dialog-actions class="text-right mb-0 pb-0 mat-dialog-actions-custom">
       <button mat-raised-button color="primary" [mat-dialog-close]="true" color="primary" tabindex="2">
-        {{ 'APP.YES' }}
+        {{ 'APP.YES' | translate }}
       </button>
       <button mat-raised-button [mat-dialog-close]="false" tabindex="-1">
-        {{ 'APP.NO' }}
+        {{ 'APP.NO' | translate }}
       </button>
     </div>
   `

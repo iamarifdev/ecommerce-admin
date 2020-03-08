@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ApiService {
-  constructor(private http: HttpClient, private storageService: StorageService) { }
+  constructor(private http: HttpClient, private storageService: StorageService) {}
 
   private getHeaders() {
     const headerContent = new HttpHeaders({
@@ -31,12 +31,12 @@ export class ApiService {
     return this.http.get<T>(`${environment.API_BASE}${path}`, { params, headers });
   }
 
-  put<T>(path: string, body: Object = {}): Observable<T> {
+  put<T>(path: string, body: object = {}): Observable<T> {
     const headers = this.getHeaders();
     return this.http.put<T>(`${environment.API_BASE}${path}`, JSON.stringify(body), { headers });
   }
 
-  post<T>(path: string, body: Object = {}): Observable<T> {
+  post<T>(path: string, body: object = {}): Observable<T> {
     const headers = this.getHeaders();
 
     return this.http.post<T>(`${environment.API_BASE}${path}`, JSON.stringify(body), { headers });
@@ -59,7 +59,25 @@ export class ApiService {
     });
   }
 
-  downloadCSV<T>(path: string, body: Object = {}): Observable<T> {
+  postFilesWithPayload<T>(path: string, filesToUpload: File[], fileKey = 'file', payload: any = null): Observable<T> {
+    const formData: FormData = new FormData();
+    filesToUpload.forEach(file => {
+      formData.append(fileKey, file, file.name);
+    });
+    if (payload) {
+      const keys = Object.keys(payload);
+
+      keys.forEach(key => {
+        formData.append(key, payload[key]);
+      });
+    }
+
+    return this.http.post<T>(`${environment.API_BASE}${path}`, formData, {
+      headers: this.getFileHeaders()
+    });
+  }
+
+  downloadCSV<T>(path: string, body: object = {}): Observable<T> {
     return this.http.post<T>(`${environment.API_BASE}${path}`, body, {
       headers: this.getHeaders(),
       responseType: 'text' as any
