@@ -17,7 +17,7 @@
     "serve:ssr": "node dist/ecommerce-admin/server/main.js",
     "build:ssr": "ng build --prod && ng run ecommerce-admin:server:production",
     "prerender": "ng run ecommerce-admin:prerender",
-    "postinstall": "npm run build:ssr"
+    "heroku-postbuild": "npm run build:ssr"
   },
   "private": true,
   "dependencies": {
