@@ -11,4 +11,5 @@ export interface IProduct {
   productColors: IProductColor[];
   pricing: IPricing;
   featureImageUrl: string;
+  isEnabled: boolean;
 }
