@@ -9,6 +9,7 @@ import { UtilityService } from '../../../shared/services/utility.service';
 import { PaginatedDataSource } from './../../../base/paginated-datasource';
 import { IProductListItem, IProduct } from '../models';
 import { ProductsService } from '../products.service';
+import { ProductColorImagesComponent } from '../product-color-images/product-color-images.component';
 
 @Component({
   selector: 'product-list',
@@ -75,6 +76,21 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   onSelectChange() {
     this.dataSource.load(0, this.shouldLoadAll);
+  }
+
+  updateProductColorImages(productListItem: IProductListItem) {
+    const dialogRef = this.dialog.open(ProductColorImagesComponent, {
+      height: '400px',
+      width: '600px',
+      disableClose: true
+    });
+
+    dialogRef.componentInstance.productListItem = productListItem;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataSource.update(productListItem.id, result);
+      }
+    });
   }
 
   changeEnableStatus(product: IProduct, templateRef: TemplateRef<any>, event) {

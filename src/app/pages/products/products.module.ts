@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductAddComponent } from './product-add/product-add.component';
+import { ProductColorImagesComponent } from './product-color-images/product-color-images.component';
 import { ProductsService } from './products.service';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -16,7 +17,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes), SharedModule],
-  declarations: [ProductListComponent, ProductAddComponent, ProductEditComponent],
-  providers: [ProductsService]
+  declarations: [ProductListComponent, ProductAddComponent, ProductEditComponent, ProductColorImagesComponent],
+  providers: [ProductsService],
+  entryComponents: [ProductListComponent, ProductColorImagesComponent]
 })
 export class ProductsModule {}
