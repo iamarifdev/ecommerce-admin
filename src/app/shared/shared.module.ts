@@ -12,7 +12,13 @@ import {
 } from './directives';
 import { SumPipe, TimeAgoPipe, TimestampPipe, ConcatPipe } from './pipes';
 import { UtilityService, DialogService, AsyncService, AsyncValidationService } from './services';
-import { ParticlesComponent, AvatarComponent, ConfirmationDialogComponent, ProgressBarComponent } from './components';
+import {
+  ParticlesComponent,
+  AvatarComponent,
+  ConfirmationDialogComponent,
+  ProgressBarComponent,
+  SelectAllOptionComponent
+} from './components';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -22,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
     AvatarComponent,
     ConfirmationDialogComponent,
     ProgressBarComponent,
+    SelectAllOptionComponent,
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,
@@ -44,6 +51,7 @@ import { TranslateModule } from '@ngx-translate/core';
     AvatarComponent,
     ConfirmationDialogComponent,
     ProgressBarComponent,
+    SelectAllOptionComponent,
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,

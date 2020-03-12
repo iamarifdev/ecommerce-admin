@@ -12,12 +12,9 @@ import { AuthUser } from '../../../app/models/auth-user.model';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  @Output() toggle = new EventEmitter<any>();
 
-  constructor(private authService: AuthService, private asynService: AsyncService, private router: Router) { }
-
-  get isLoading(): boolean {
-    return this.asynService.loading;
-  }
+  constructor(public asynService: AsyncService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.router.events
@@ -27,8 +24,8 @@ export class NavbarComponent implements OnInit {
             event instanceof NavigationStart ||
             event instanceof NavigationEnd ||
             event instanceof NavigationCancel ||
-            event instanceof NavigationError,
-        ),
+            event instanceof NavigationError
+        )
       )
       .subscribe(event => {
         if (event instanceof NavigationStart) {
@@ -38,8 +35,6 @@ export class NavbarComponent implements OnInit {
         this.asynService.finish();
       });
   }
-
-  @Output() toggle = new EventEmitter<any>();
 
   onToggle(): void {
     this.toggle.emit();

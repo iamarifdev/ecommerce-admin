@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { ApiResponse, ApiPagedResponse } from '../../../app/models/api-response.model';
 import { ApiService, UtilityService } from '../../../app/shared/services';
 import { IDataSourceService } from '../../../app/base/datasource.service';
-import { IProduct, IProductListItem } from './models';
+import { IProduct, IProductListItem, IProductAdd } from './models';
 
 @Injectable()
 export class ProductsService implements IDataSourceService<IProductListItem> {
@@ -13,7 +13,7 @@ export class ProductsService implements IDataSourceService<IProductListItem> {
 
   constructor(private apiService: ApiService, private utilService: UtilityService) {}
 
-  public addProduct(product: IProduct): Observable<ApiResponse<IProduct>> {
+  public addProduct(product: IProductAdd): Observable<ApiResponse<IProduct>> {
     return this.apiService.post<ApiResponse<IProduct>>(`${this.baseUrl}/add`, product).pipe(
       catchError(error => {
         this.utilService.openErrorSnackBar(error.error.message);

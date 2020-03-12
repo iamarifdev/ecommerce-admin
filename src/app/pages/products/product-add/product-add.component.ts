@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 import { UtilityService, AsyncService, AsyncValidationService } from '../../../shared/services';
-import { CustomVaidators } from '../../../shared/helpers/custom.validators';
 import { HeaderMenuService } from '../../../services/header-menu.service';
 import { ProductsService } from '../products.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'product-add',
@@ -12,24 +13,30 @@ import { ProductsService } from '../products.service';
   styleUrls: ['./product-add.component.scss']
 })
 export class ProductAddComponent implements OnInit {
-  productAddForm: FormGroup;
+  public productAddForm: FormGroup;
+
+  public sizes: number[] = [];
+
+  @ViewChild('featureImage', { static: true }) featureImage: ElementRef;
 
   constructor(
     public asyncService: AsyncService,
     private fb: FormBuilder,
+    private router: Router,
     private headerMenuService: HeaderMenuService,
     private validationService: AsyncValidationService,
     private utilService: UtilityService,
     private productsService: ProductsService
-  ) {}
+  ) {
+    this.sizes = Array(15)
+      .fill(30)
+      .map((x, y) => x + y);
+  }
 
   ngOnInit() {
     this.productAddForm = this.fb.group({
       sku: ['', Validators.required],
-      title: [
-        '',
-        [Validators.required, Validators.minLength(2)]
-      ],
+      title: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', Validators.required],
       manufactureDetail: this.fb.group({
         modelNo: ['', Validators.required],
@@ -39,24 +46,28 @@ export class ProductAddComponent implements OnInit {
       pricing: this.fb.group({
         price: [0, [Validators.required, Validators.min(1)]]
       }),
-      featureImageUrl: [null, Validators.required],
+      featureImage: [null],
       isEnabled: [true, Validators.required]
     });
+    this.headerMenuService.setHeaderMenu({ title: 'Add Product', subtitle: 'Products' });
   }
 
   get manufactureDetail(): FormGroup {
-    this.headerMenuService.setHeaderMenu({ title: 'Add Product', subtitle: 'Products' });
     return this.productAddForm.get('manufactureDetail') as FormGroup;
+  }
+
+  get pricing(): FormGroup {
+    return this.productAddForm.get('pricing') as FormGroup;
   }
 
   createProductColor(): FormGroup {
     return this.fb.group({
-      colorCode: ['', Validators.required],
+      colorCode: ['', [Validators.required, Validators.pattern(/^#([A-Fa-f0-9]{3}){1,2}\b/)]],
       colorName: ['', Validators.required],
       inStock: [0, Validators.min(0)],
-      isAvailable: [true],
-      images: [null],
-      sizes: [[], Validators.required]
+      isAvailable: [false],
+      // images: [null],
+      sizes: [null, Validators.required]
     });
   }
 
@@ -76,8 +87,60 @@ export class ProductAddComponent implements OnInit {
     return this.productColors.controls[index];
   }
 
-  addProduct() {
-    // TODO: implement
+  changeInStock(event: any, index: number) {
+    const isAvailableControl = this.getProductColorControl(index).get('isAvailable');
+    isAvailableControl.patchValue(!!parseFloat(event.target.value));
   }
 
+  changeAvailibilty(event: MatCheckboxChange, index: number) {
+    if (!event.checked) {
+      const inStockControl = this.getProductColorControl(index).get('inStock');
+      inStockControl.patchValue(0);
+    }
+  }
+
+  addProduct() {
+    if (this.productAddForm.valid) {
+      this.asyncService.start();
+      const { featureImage, ...data } = this.productAddForm.value;
+      this.productsService.addProduct(data).subscribe(
+        response => {
+          if (response.success && response.result) {
+            this.utilService.openSuccessSnackBar('Product added succesfully!');
+            this.asyncService.finish();
+            if (featureImage) {
+              const product = response.result;
+              this.uploadFeatureImage(product.id);
+            } else {
+              this.router.navigate(['/products']);
+            }
+          }
+          this.asyncService.finish();
+        },
+        error => {
+          this.asyncService.finish();
+        }
+      );
+    }
+  }
+
+  uploadFeatureImage(productId: string) {
+    const element = this.featureImage.nativeElement;
+    if (element.files && element.files[0]) {
+      this.asyncService.start();
+      const file = element.files[0];
+      this.productsService.uploadFeatureImage(productId, file).subscribe(
+        response => {
+          if (response.success && response.result) {
+            this.utilService.openSuccessSnackBar('Product feature image uploaded!');
+            this.router.navigate(['/products']);
+          }
+          this.asyncService.finish();
+        },
+        error => {
+          this.asyncService.finish();
+        }
+      );
+    }
+  }
 }

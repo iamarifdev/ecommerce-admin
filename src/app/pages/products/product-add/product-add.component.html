@@ -1,6 +1,15 @@
 <div class="custom-inner-wrap">
   <div class="text-right float-add-menu">
-    <button mat-fab color="primary" class="m-r-5" matTooltip="{{ 'APP.SAVE' | translate }}" matTooltipPosition="above">
+    <button
+      mat-fab
+      type="submit"
+      color="primary"
+      class="m-r-5"
+      matTooltip="{{ 'APP.SAVE' | translate }}"
+      matTooltipPosition="above"
+      form="productAddForm"
+      [disabled]="!productAddForm.valid || productAddForm.pristine || asyncService.loading"
+    >
       <mat-icon class="material-icons">save</mat-icon>
     </button>
   </div>
@@ -20,6 +29,9 @@
           <input matInput placeholder="{{ 'PRODUCT.TITLE' | translate }}" formControlName="title" />
           <mat-error *ngIf="productAddForm.controls['title'].hasError('required')">
             {{ 'PRODUCT.TITLE_IS_REQUIRED' | translate }}
+          </mat-error>
+          <mat-error *ngIf="productAddForm.controls['title'].hasError('minlength')">
+            {{ 'PRODUCT.TITLE_MIN_LENGTH' | translate }}
           </mat-error>
         </mat-form-field>
 
@@ -45,7 +57,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-card fxFlex="100">
+        <mat-card fxFlex="100" class="mb-1">
           <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-1">
             <mat-label>{{ 'PRODUCT.MANUFACTURE_DETAIL' | translate }}</mat-label>
           </div>
@@ -125,6 +137,15 @@
                 >
                   {{ 'PRODUCT.COLOR_CODE_IS_REQUIRED' | translate }}
                 </mat-error>
+                <mat-error
+                  *ngIf="
+                    getProductColorControl(i)
+                      .get('colorCode')
+                      .hasError('pattern')
+                  "
+                >
+                  {{ 'PRODUCT.COLOR_CODE_FORMAT' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
@@ -148,6 +169,7 @@
                   type="number"
                   placeholder="{{ 'PRODUCT.IN_STOCK' | translate }}"
                   formControlName="inStock"
+                  (input)="changeInStock($event, i)"
                 />
                 <mat-error
                   *ngIf="
@@ -169,24 +191,15 @@
                 </mat-error>
               </mat-form-field>
 
-              <!-- <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-                <mat-label>{{ 'PRODUCT.IMAGES' | translate }}</mat-label>
-                <input type="file" multiple placeholder="{{ 'PRODUCT.IMAGES' | translate }}" formControlName="images" />
-                <mat-error
-                  *ngIf="
-                    getProductColorControl(i)
-                      .get('images')
-                      .hasError('required')
-                  "
-                >
-                  {{ 'PRODUCT.IMAGES_IS_REQUIRED' | translate }}
-                </mat-error>
-              </mat-form-field> -->
-
-
               <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
                 <mat-label>{{ 'PRODUCT.SIZES' | translate }}</mat-label>
-                <input matInput placeholder="{{ 'PRODUCT.SIZES' | translate }}" formControlName="sizes" />
+                <mat-select placeholder="{{ 'USER.SIZES' | translate }}" formControlName="sizes" multiple>
+                  <select-all-option
+                    [model]="getProductColorControl(i).get('sizes')"
+                    [values]="sizes"
+                  ></select-all-option>
+                  <mat-option *ngFor="let size of sizes" [value]="size">{{ size }}</mat-option>
+                </mat-select>
                 <mat-error
                   *ngIf="
                     getProductColorControl(i)
@@ -198,11 +211,8 @@
                 </mat-error>
               </mat-form-field>
 
-              <input type="file" multiple placeholder="{{ 'PRODUCT.IMAGES' | translate }}" formControlName="images" />
-
-
               <div fxFlex="100" class="padding-lr-5">
-                <mat-checkbox color="primary" formControlName="isAvailable">
+                <mat-checkbox color="primary" formControlName="isAvailable" (change)="changeAvailibilty($event, i)">
                   {{ 'PRODUCT.IS_AVAILABLE' | translate }}
                 </mat-checkbox>
               </div>
@@ -210,24 +220,38 @@
           </mat-card-content>
         </mat-card>
 
-        <!-- <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
-          <mat-label>{{ 'PRODUCT.FEATURE_IMAGE' | translate }}</mat-label>
-          <input
-            type="file"
-            multiple
-            placeholder="{{ 'PRODUCT.FEATURE_IMAGE' | translate }}"
-            formControlName="featureImageUrl"
-          />
-          <mat-error *ngIf="productAddForm.controls['featureImageUrl'].hasError('required')">
-            {{ 'PRODUCT.FEATURE_IMAGE_IS_REQUIRED' | translate }}
-          </mat-error>
-        </mat-form-field> -->
+        <mat-card fxFlex="100" class="mb-1">
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-1">
+            <mat-label>{{ 'PRODUCT.PRICING' | translate }}</mat-label>
+          </div>
+          <mat-card-content formGroupName="pricing" fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
+            <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+              <mat-label>{{ 'PRODUCT.PRICE' | translate }}</mat-label>
+              <input matInput type="number" placeholder="{{ 'PRODUCT.PRICE' | translate }}" formControlName="price" />
+              <mat-error *ngIf="pricing.controls['price'].hasError('required')">
+                {{ 'PRODUCT.PRICE_IS_REQUIRED' | translate }}
+              </mat-error>
+              <mat-error *ngIf="pricing.controls['price'].hasError('min')">
+                {{ 'PRODUCT.PRICE_MIN' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
 
-        <input
-          type="file"
-          placeholder="{{ 'PRODUCT.FEATURE_IMAGE' | translate }}"
-          formControlName="featureImageUrl"
-        />
+        <mat-card fxFlex="100" class="mb-2">
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-1">
+            <mat-label>{{ 'PRODUCT.FEATURE_IMAGE' | translate }}</mat-label>
+          </div>
+          <mat-card-content fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
+            <input
+              type="file"
+              accept="image/*"
+              placeholder="{{ 'PRODUCT.FEATURE_IMAGE' | translate }}"
+              formControlName="featureImage"
+              #featureImage
+            />
+          </mat-card-content>
+        </mat-card>
 
         <div fxFlex="100" class="padding-lr-5">
           <mat-checkbox color="primary" formControlName="isEnabled">
