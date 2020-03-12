@@ -115,7 +115,6 @@ export class ProductAddComponent implements OnInit {
               this.router.navigate(['/products']);
             }
           }
-          this.asyncService.finish();
         },
         error => {
           this.asyncService.finish();
