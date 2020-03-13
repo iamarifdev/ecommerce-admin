@@ -1,9 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
-import { SpinnerComponent } from './components/spinner.component';
 import {
   OnlyNumberDirective,
   AccordionAnchorDirective,
@@ -17,9 +17,9 @@ import {
   AvatarComponent,
   ConfirmationDialogComponent,
   ProgressBarComponent,
-  SelectAllOptionComponent
+  SelectAllOptionComponent,
+  SpinnerComponent
 } from './components';
-import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [

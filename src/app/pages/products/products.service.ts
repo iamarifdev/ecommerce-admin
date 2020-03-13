@@ -23,7 +23,7 @@ export class ProductsService implements IDataSourceService<IProductListItem> {
   }
 
   public getProductById(id: string): Observable<ApiResponse<IProduct>> {
-    return this.apiService.get<ApiResponse<IProduct>>(`${this.baseUrl}/id/${id}`).pipe(
+    return this.apiService.get<ApiResponse<IProduct>>(`${this.baseUrl}/${id}`).pipe(
       catchError(error => {
         this.utilService.openErrorSnackBar(error.error.message);
         return of(null);

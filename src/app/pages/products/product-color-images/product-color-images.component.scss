@@ -1,0 +1,33 @@
+.product-color {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    width: 30px;
+    height: 30px;
+    border: 1px solid grey;
+    border-radius: 50%;
+  }
+}
+
+.selected-product-color {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    width: 20px;
+    height: 20px;
+    border: 1px solid grey;
+    border-radius: 50%;
+  }
+}
+
+.feature-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  border: 1px solid lightgrey;
+}

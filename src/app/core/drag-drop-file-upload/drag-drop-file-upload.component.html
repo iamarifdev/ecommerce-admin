@@ -1,0 +1,24 @@
+<div class="container fileUploadWrapper">
+  <div>
+    <div class="row">
+      <mat-progress-bar class="progress" *ngIf="progress" mode="determinate" [value]="progress"></mat-progress-bar>
+
+      <div>
+        <div class="fileupload" dragDropFileUpload (click)="fileField.click()" (fileDropped)="processFilesToUpload($event)">
+          <span class="ddinfo">Choose files or drag here</span>
+          <input type="file" name="images" #fileField (change)="processFilesToUpload($event.target.files)" hidden multiple />
+        </div>
+      </div>
+
+      <div>
+        <div class="image-list" *ngFor="let file of fileList; let i = index">
+          <div class="profile">
+            <img [src]="sanitize(file['url'])" alt="" />
+          </div>
+          <p>{{ file.item.name }}</p>
+        </div>
+        <p *ngIf="msg" class="message">{{ msg }}</p>
+      </div>
+    </div>
+  </div>
+</div>

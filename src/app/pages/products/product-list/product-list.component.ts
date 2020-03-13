@@ -80,8 +80,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   updateProductColorImages(productListItem: IProductListItem) {
     const dialogRef = this.dialog.open(ProductColorImagesComponent, {
-      height: '400px',
-      width: '600px',
+      height: '600px',
+      width: '800px',
       disableClose: true
     });
 

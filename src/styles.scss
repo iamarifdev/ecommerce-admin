@@ -586,6 +586,9 @@ html {
 .ma-0 {
   margin: 0 !important;
 }
+.ma-1 {
+  margin: 5px !important;
+}
 
 .mb-0 {
   margin-bottom: 0 !important;
@@ -1204,6 +1207,7 @@ app-delete-confirmation-dialog {
     padding: 0 5px;
   }
   mat-toolbar-row {
+    height: 30px !important;
     display: flex;
     flex-wrap: nowrap;
     -ms-flex-pack: justify !important;

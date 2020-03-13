@@ -95,6 +95,7 @@
     "RELEASE_DATE": "Release date",
     "RELEASE_DATE_IS_REQUIRED": "Release date is required",
     "PRODUCT_COLORS": "Product Colors",
+    "UPLOAD_PRODUCT_IMAGES": "Upload product color images",
     "COLOR_CODE": "Color code",
     "COLOR_CODE_IS_REQUIRED": "Color code is required",
     "COLOR_CODE_FORMAT": "Color code is not valid. ex: #abcdef",

@@ -10,7 +10,7 @@ import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-transla
 
 import { SharedModule } from './shared/shared.module';
 import { RefreshTokenInterceptor } from './shared/interceptors/refresh-token.interceptor';
-import { ApiService, UtilityService, ConnectionService, StorageService, AuthGuard } from './shared/services';
+import { ApiService, ConnectionService, StorageService, AuthGuard } from './shared/services';
 import { AuthService } from './auth/auth.service';
 import { NavService } from './services/nav.service';
 import { HeaderMenuService } from './services/header-menu.service';
@@ -75,7 +75,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ApiService,
     StorageService,
     HeaderMenuService,
-    UtilityService,
     ConnectionService,
     AuthService,
     AuthGuard

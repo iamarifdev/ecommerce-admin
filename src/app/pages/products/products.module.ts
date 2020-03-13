@@ -7,6 +7,7 @@ import { ProductAddComponent } from './product-add/product-add.component';
 import { ProductColorImagesComponent } from './product-color-images/product-color-images.component';
 import { ProductsService } from './products.service';
 import { SharedModule } from '../../shared/shared.module';
+import { DragDropFileUploadModule } from 'src/app/core/drag-drop-file-upload/drag-drop-file-upload.module';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
@@ -16,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), SharedModule],
+  imports: [RouterModule.forChild(routes), SharedModule, DragDropFileUploadModule],
   declarations: [ProductListComponent, ProductAddComponent, ProductEditComponent, ProductColorImagesComponent],
   providers: [ProductsService],
   entryComponents: [ProductListComponent, ProductColorImagesComponent]

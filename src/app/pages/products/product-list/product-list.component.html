@@ -15,7 +15,7 @@
   <mat-card class="mb-1">
     <mat-card-content>
       <div class="filter-box" align-items-center fxLayout="row" fxLayout.sm="column" fxLayoutWrap="wrap">
-        <mat-form-field fxFlex="15" appearance="fill">
+        <mat-form-field fxFlex="25" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
           <mat-label>{{ 'PRODUCT.STATUS' | translate }}</mat-label>
           <mat-select [(ngModel)]="shouldLoadAll" (selectionChange)="onSelectChange()">
             <mat-option *ngFor="let item of activeOptions" [value]="item.value">
