@@ -15,8 +15,11 @@
     <mat-sidenav-content>
       <mat-card>
         <mat-card-header>
-          <button mat-mini-fab color="primary" class="home-button">
+          <button mat-mini-fab color="primary" class="mr-1" matTooltip="Home">
             <mat-icon>home</mat-icon>
+          </button>
+          <button *ngIf="headerMenu?.goBack" mat-mini-fab color="primary" class="mr-1" matTooltip="Go Back" (click)="goBack()">
+            <mat-icon>keyboard_backspace</mat-icon>
           </button>
           <strong>{{ headerMenu?.title }}</strong>
         </mat-card-header>

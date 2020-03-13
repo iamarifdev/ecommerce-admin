@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { delay, startWith } from 'rxjs/operators';
@@ -26,6 +27,7 @@ export class SidebarComponent implements AfterViewInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
     private headerMenuService: HeaderMenuService,
+    private location: Location,
     public navService: NavService
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
@@ -39,6 +41,10 @@ export class SidebarComponent implements AfterViewInit, OnDestroy {
     this.headerMenuService.headerMenu$
       .pipe(startWith(null), delay(0))
       .subscribe(headerMenu => (this.headerMenu = headerMenu));
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   ngOnDestroy(): void {

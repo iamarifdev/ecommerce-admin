@@ -49,7 +49,7 @@ export class ProductAddComponent implements OnInit {
       featureImage: [null],
       isEnabled: [true, Validators.required]
     });
-    this.headerMenuService.setHeaderMenu({ title: 'Add Product', subtitle: 'Products' });
+    this.headerMenuService.setHeaderMenu({ title: 'Add Product', subtitle: 'Products', goBack: true });
   }
 
   get manufactureDetail(): FormGroup {
