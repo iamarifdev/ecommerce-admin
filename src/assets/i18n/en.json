@@ -2,6 +2,7 @@
   "APP": {
     "NAME": "Name",
     "ACTIVE": "Active",
+    "TOGGLE_ACTIVE_DEACTIVE": "Toggle active/deactive",
     "ACTION": "Action",
     "YES": "Yes",
     "NO": "No",

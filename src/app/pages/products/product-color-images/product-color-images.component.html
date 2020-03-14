@@ -36,7 +36,7 @@
               </div>
             </h3>
           </div>
-          <div fxFlex="30" *ngIf="uploadedImages.length" fxFlex="100" fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
+          <div fxFlex="30" *ngIf="uploadedImages.length" fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
             <img class="ma-1" *ngFor="let image of uploadedImages" [src]="image" width="80" height="80">
           </div>
         </div>

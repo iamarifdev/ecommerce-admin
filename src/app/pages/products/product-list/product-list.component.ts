@@ -27,6 +27,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     'sku',
     'manufactureDetail',
     'pricing',
+    'colors',
     'createdAt',
     'updatedAt',
     'isEnabled',

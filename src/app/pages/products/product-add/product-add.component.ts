@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
-import { UtilityService, AsyncService, AsyncValidationService } from '../../../shared/services';
+import { UtilityService, AsyncService } from '../../../shared/services';
 import { HeaderMenuService } from '../../../services/header-menu.service';
 import { ProductsService } from '../products.service';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'product-add',
@@ -24,7 +24,6 @@ export class ProductAddComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private headerMenuService: HeaderMenuService,
-    private validationService: AsyncValidationService,
     private utilService: UtilityService,
     private productsService: ProductsService
   ) {

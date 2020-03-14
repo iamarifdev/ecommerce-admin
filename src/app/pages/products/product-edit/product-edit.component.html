@@ -1,3 +1,289 @@
-<p>
-  product-edit works!
-</p>
+<div class="custom-inner-wrap">
+  <div class="text-right float-add-menu">
+    <button
+      mat-fab
+      type="submit"
+      color="primary"
+      class="m-r-5"
+      matTooltip="{{ 'APP.SAVE' | translate }}"
+      matTooltipPosition="above"
+      form="productEditForm"
+      [disabled]="!productEditForm.valid || productEditForm.pristine || asyncService.loading"
+    >
+      <mat-icon class="material-icons">save</mat-icon>
+    </button>
+  </div>
+
+  <form
+    id="productEditForm"
+    [formGroup]="productEditForm"
+    class="filter-box"
+    fxLayout="column"
+    fxLayoutWrap="wrap"
+    (submit)="updateProduct()"
+  >
+    <mat-card>
+      <mat-card-content fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'PRODUCT.TITLE' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'PRODUCT.TITLE' | translate }}" formControlName="title" />
+          <mat-error *ngIf="productEditForm.controls['title'].hasError('required')">
+            {{ 'PRODUCT.TITLE_IS_REQUIRED' | translate }}
+          </mat-error>
+          <mat-error *ngIf="productEditForm.controls['title'].hasError('minlength')">
+            {{ 'PRODUCT.TITLE_MIN_LENGTH' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'PRODUCT.SKU' | translate }}</mat-label>
+          <input matInput placeholder="{{ 'PRODUCT.SKU' | translate }}" formControlName="sku" />
+          <mat-error *ngIf="productEditForm.controls['sku'].invalid">
+            <ng-container *ngIf="productEditForm.controls['sku'].hasError('required')">
+              {{ 'PRODUCT.SKU_IS_REQUIRED' | translate }}
+            </ng-container>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+          <mat-label>{{ 'PRODUCT.DESCRIPTION' | translate }}</mat-label>
+          <textarea
+            matInput
+            placeholder="{{ 'PRODUCT.DESCRIPTION' | translate }}"
+            formControlName="description"
+          ></textarea>
+          <mat-error *ngIf="productEditForm.controls['description'].hasError('required')">
+            {{ 'PRODUCT.DESCRIPTION_IS_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-card fxFlex="100" class="mb-1">
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-1">
+            <mat-label>{{ 'PRODUCT.MANUFACTURE_DETAIL' | translate }}</mat-label>
+          </div>
+          <mat-card-content
+            formGroupName="manufactureDetail"
+            fxLayout="row wrap"
+            fxFlex.xs="column wrap"
+            fxFlex.sm="column wrap"
+          >
+            <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+              <mat-label>{{ 'PRODUCT.MODEL' | translate }}</mat-label>
+              <input matInput placeholder="{{ 'PRODUCT.MODEL' | translate }}" formControlName="modelNo" />
+              <mat-error *ngIf="manufactureDetail.controls['modelNo'].hasError('required')">
+                {{ 'PRODUCT.MODEL_IS_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+              <mat-label>{{ 'PRODUCT.RELEASE_DATE' | translate }}</mat-label>
+              <input
+                matInput
+                [matDatepicker]="myDatepicker"
+                placeholder="{{ 'PRODUCT.RELEASE_DATE' | translate }}"
+                formControlName="releaseDate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #myDatepicker></mat-datepicker>
+              <mat-error *ngIf="manufactureDetail.controls['releaseDate'].hasError('required')">
+                {{ 'PRODUCT.RELEASE_DATE_IS_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card fxFlex="100" class="mb-1">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label>{{ 'PRODUCT.PRODUCT_COLORS' | translate }}</mat-label>
+            <button
+              type="button"
+              mat-icon-button
+              matTooltip="{{ 'APP.ADD_MORE' | translate }}"
+              (click)="addMoreProductColor()"
+            >
+              <mat-icon>add_box</mat-icon>
+            </button>
+          </div>
+
+          <mat-card-content
+            formArrayName="productColors"
+            *ngFor="let item of productColors.controls; let i = index"
+            fxLayout="row wrap"
+            fxFlex.xs="column wrap"
+            fxFlex.sm="column wrap"
+          >
+            <div *ngIf="i > 0" class="mb-1" fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
+              <button
+                *ngIf="i > 0"
+                type="button"
+                matSuffix
+                mat-icon-button
+                matTooltip="{{ 'APP.REMOVE' | translate }}"
+                (click)="removeProductColor(i)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <ng-container [formGroupName]="i">
+              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>{{ 'PRODUCT.COLOR_CODE' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'PRODUCT.COLOR_CODE' | translate }}" formControlName="colorCode" />
+                <mat-error
+                  *ngIf="
+                    getProductColorControl(i)
+                      .get('colorCode')
+                      .hasError('required')
+                  "
+                >
+                  {{ 'PRODUCT.COLOR_CODE_IS_REQUIRED' | translate }}
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    getProductColorControl(i)
+                      .get('colorCode')
+                      .hasError('pattern')
+                  "
+                >
+                  {{ 'PRODUCT.COLOR_CODE_FORMAT' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>{{ 'PRODUCT.COLOR_NAME' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'PRODUCT.COLOR_NAME' | translate }}" formControlName="colorName" />
+                <mat-error
+                  *ngIf="
+                    getProductColorControl(i)
+                      .get('colorName')
+                      .hasError('required')
+                  "
+                >
+                  {{ 'PRODUCT.COLOR_NAME_IS_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>{{ 'PRODUCT.IN_STOCK' | translate }}</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  placeholder="{{ 'PRODUCT.IN_STOCK' | translate }}"
+                  formControlName="inStock"
+                  (input)="changeInStock($event, i)"
+                />
+                <mat-error
+                  *ngIf="
+                    getProductColorControl(i)
+                      .get('inStock')
+                      .hasError('required')
+                  "
+                >
+                  {{ 'PRODUCT.IN_STOCK_IS_REQUIRED' | translate }}
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    getProductColorControl(i)
+                      .get('inStock')
+                      .hasError('min')
+                  "
+                >
+                  {{ 'PRODUCT.IN_STOCK_MIN' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>{{ 'PRODUCT.SIZES' | translate }}</mat-label>
+                <mat-select placeholder="{{ 'USER.SIZES' | translate }}" formControlName="sizes" multiple>
+                  <select-all-option
+                    [model]="getProductColorControl(i).get('sizes')"
+                    [values]="sizes"
+                  ></select-all-option>
+                  <mat-option *ngFor="let size of sizes" [value]="size">{{ size }}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="
+                    getProductColorControl(i)
+                      .get('sizes')
+                      .hasError('required')
+                  "
+                >
+                  {{ 'PRODUCT.SIZES_IS_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <div fxFlex="100" class="padding-lr-5">
+                <mat-checkbox color="primary" formControlName="isAvailable" (change)="changeAvailibilty($event, i)">
+                  {{ 'PRODUCT.IS_AVAILABLE' | translate }}
+                </mat-checkbox>
+              </div>
+
+              <div
+                fxFlex="100"
+                *ngIf="getProductColorControl(i).get('images').value"
+                fxLayout="row wrap"
+                fxFlex.xs="column wrap"
+                fxFlex.sm="column wrap"
+              >
+                <img
+                  class="ma-1"
+                  *ngFor="let image of getProductColorControl(i).get('images').value"
+                  [src]="image"
+                  width="100"
+                  height="100"
+                />
+              </div>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card fxFlex="100" class="mb-1">
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-1">
+            <mat-label>{{ 'PRODUCT.PRICING' | translate }}</mat-label>
+          </div>
+          <mat-card-content formGroupName="pricing" fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
+            <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+              <mat-label>{{ 'PRODUCT.PRICE' | translate }}</mat-label>
+              <input matInput type="number" placeholder="{{ 'PRODUCT.PRICE' | translate }}" formControlName="price" />
+              <mat-error *ngIf="pricing.controls['price'].hasError('required')">
+                {{ 'PRODUCT.PRICE_IS_REQUIRED' | translate }}
+              </mat-error>
+              <mat-error *ngIf="pricing.controls['price'].hasError('min')">
+                {{ 'PRODUCT.PRICE_MIN' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card fxFlex="100" class="mb-2">
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-1">
+            <mat-label>{{ 'PRODUCT.FEATURE_IMAGE' | translate }}</mat-label>
+          </div>
+          <mat-card-content fxLayout="row wrap" fxFlex.xs="column wrap" fxFlex.sm="column wrap">
+            <input
+              type="file"
+              accept="image/*"
+              placeholder="{{ 'PRODUCT.FEATURE_IMAGE' | translate }}"
+              formControlName="featureImage"
+              #featureImage
+            />
+            <div
+              fxFlex="100"
+              *ngIf="product?.featureImageUrl"
+              fxLayout="row wrap"
+              fxFlex.xs="column wrap"
+              fxFlex.sm="column wrap"
+            >
+              <img class="ma-1" [src]="product?.featureImageUrl" width="100" height="100" />
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <div fxFlex="100" class="padding-lr-5">
+          <mat-checkbox color="primary" formControlName="isEnabled">
+            {{ 'APP.ACTIVE' | translate }}
+          </mat-checkbox>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
