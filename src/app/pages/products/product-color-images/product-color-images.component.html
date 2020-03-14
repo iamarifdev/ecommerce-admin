@@ -22,7 +22,7 @@
           <div fxLayout="column" class="mr-1">
             <div class="feature-image">
               <img width="100" height="100" [src]="productListItem?.featureImageUrl" />
-              <p class="ma-0">Feature Image</p>    
+              <p class="ma-0">Feature Image</p>
             </div>
           </div>
           <div fxFlex="40" fxLayout="column" fxLayoutAlign="flex-start">
@@ -79,7 +79,7 @@
       class="float-save-btn"
       mat-fab
       color="primary"
-      [disabled]="!productColorImagesForm.valid"
+      [disabled]="!productColorImagesForm.valid || asyncService.loading"
       matTooltip="{{ 'APP.SAVE' | translate }}"
       matTooltipPosition="above"
     >

@@ -6,7 +6,7 @@ import { AsyncService } from '../services/async.service';
   selector: 'progress-bar',
   template: `
     <div *ngIf="asyncService?.loading" class="progress-bar-container">
-      <mat-progress-bar class="progress-bar" color="warn" mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar class="progress-bar" color="accent" mode="indeterminate"></mat-progress-bar>
     </div>
   `
 })

@@ -3,6 +3,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { DragDropFileUploadService } from './drag-drop-file-upload.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'drag-drop-file-upload',
@@ -32,42 +33,43 @@ export class DragDropFileUploadComponent {
     });
 
     if (!this.uploadOnDemand) {
-      this.uploadImages();
+      this.uploadImages().subscribe();
     }
   }
 
-  uploadImages(callback?: () => void) {
+  uploadImages() {
     if (!this.uploadUrl) {
       console.error('No upload url is passed.');
       return;
     }
     const images = this.fileList.map(i => i.item);
-    return this.dragdropService.addFiles(this.uploadUrl, this.fileKey, images).subscribe((event: HttpEvent<any>) => {
-      switch (event.type) {
-        case HttpEventType.Sent:
-          console.log('Request has been made!');
-          break;
-        case HttpEventType.ResponseHeader:
-          console.log('Response header has been received!');
-          break;
-        case HttpEventType.UploadProgress:
-          this.progress = Math.round((event.loaded / event.total) * 100);
-          console.log(`Uploaded! ${this.progress}%`);
-          break;
-        case HttpEventType.Response:
-          console.log('File uploaded successfully!', event.body);
-          if (callback) callback();
-          if (this.clearAfterUpload) {
-            setTimeout(() => {
-              this.progress = 0;
-              this.fileList = [];
-              this.msg = '';
-            })
-          }
-          this.msg = 'Files uploaded successfully!';
-      }
-      return event;
-    });
+    return this.dragdropService.addFiles(this.uploadUrl, this.fileKey, images).pipe(
+      map((event: HttpEvent<any>) => {
+        switch (event.type) {
+          case HttpEventType.Sent:
+            console.log('Request has been made!');
+            break;
+          case HttpEventType.ResponseHeader:
+            console.log('Response header has been received!');
+            break;
+          case HttpEventType.UploadProgress:
+            this.progress = Math.round((event.loaded / event.total) * 100);
+            console.log(`Uploaded! ${this.progress}%`);
+            break;
+          case HttpEventType.Response:
+            console.log('File uploaded successfully!', event.body);
+            if (this.clearAfterUpload) {
+              setTimeout(() => {
+                this.progress = 0;
+                this.fileList = [];
+                this.msg = '';
+              });
+            }
+            this.msg = 'Files uploaded successfully!';
+        }
+        return event;
+      })
+    );
   }
 
   sanitize(url: string) {

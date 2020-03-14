@@ -33,7 +33,7 @@
         <mat-spinner></mat-spinner>
       </div>
       <div class="example-container table-responsive">
-        <table mat-table [dataSource]="dataSource">
+        <table mat-table [dataSource]="dataSource" class="table-wrap">
           <ng-container matColumnDef="sl">
             <th mat-header-cell *matHeaderCellDef>#</th>
             <td mat-cell *matCellDef="let element; let i = index">

@@ -1853,48 +1853,6 @@ label.form-check-label.label-item-all input:checked {
   }
 }
 
-.courier-item {
-  margin: 0;
-
-  span {
-    display: block;
-  }
-}
-
-.hap-accordion-wrapper {
-  .mat-expansion-panel {
-    padding: 20px 30px 20px 50px !important;
-  }
-
-  .mat-expansion-panel-header {
-    &:hover {
-      background: none !important;
-      color: $primary;
-    }
-
-    .ac-title-details {
-      h3 {
-        margin: 0;
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 20px;
-
-        span {
-          color: $primary;
-        }
-      }
-
-      label {
-        display: block;
-        margin: 0;
-        line-height: 18px !important;
-        font-size: 18px;
-        color: #666;
-      }
-    }
-  }
-}
 
 .justify-content-end {
   justify-content: flex-end;
@@ -2183,24 +2141,7 @@ label.form-check-label.label-item-all input:checked {
     }
   }
 }
-.endlab-pannel-title {
-  h4 {
-    font-size: 18px;
-    text-transform: uppercase;
-    font-weight: bold;
-    span {
-      color: #009c89;
-    }
-    p {
-      display: block;
-      color: #777777;
-      text-transform: capitalize;
-      font-size: 14px !important;
-      margin: 0;
-      font-weight: normal;
-    }
-  }
-}
+
 .sub-title-sm {
   font-size: 14px;
   font-weight: bold;

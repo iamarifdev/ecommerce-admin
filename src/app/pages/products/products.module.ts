@@ -7,7 +7,7 @@ import { ProductAddComponent } from './product-add/product-add.component';
 import { ProductColorImagesComponent } from './product-color-images/product-color-images.component';
 import { ProductsService } from './products.service';
 import { SharedModule } from '../../shared/shared.module';
-import { DragDropFileUploadModule } from 'src/app/core/drag-drop-file-upload/drag-drop-file-upload.module';
+import { DragDropFileUploadModule } from '../../@core/drag-drop-file-upload/drag-drop-file-upload.module';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },

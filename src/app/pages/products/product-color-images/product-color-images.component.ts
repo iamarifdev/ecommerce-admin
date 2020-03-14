@@ -1,19 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpEventType } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { environment } from '../../../../environments/environment';
-import { UtilityService } from '../../../shared/services';
 import { IProductListItem, IProduct } from '../models';
+import { DragDropFileUploadComponent } from '../../../@core/drag-drop-file-upload/drag-drop-file-upload.component';
+import { UtilityService, AsyncService } from '../../../shared/services';
 import { ProductsService } from '../products.service';
-import { DragDropFileUploadComponent } from '../../../../app/core/drag-drop-file-upload/drag-drop-file-upload.component';
 
 @Component({
   selector: 'product-color-images',
   templateUrl: './product-color-images.component.html',
   styleUrls: ['./product-color-images.component.scss']
 })
-export class ProductColorImagesComponent implements OnInit {
+export class ProductColorImagesComponent implements OnInit, OnDestroy {
   productColorImagesForm: FormGroup;
   productListItem: IProductListItem;
   product: IProduct;
@@ -26,11 +27,12 @@ export class ProductColorImagesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ProductColorImagesComponent>,
     private fb: FormBuilder,
+    public asyncService: AsyncService,
     private utilityService: UtilityService,
     private productsService: ProductsService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const { productColors } = this.productListItem;
     if (productColors && productColors.length) {
       this.selectedColor = productColors[0].colorCode;
@@ -42,23 +44,26 @@ export class ProductColorImagesComponent implements OnInit {
     this.getProductDetail();
   }
 
-  filterImagesByColor() {
+  filterImagesByColor(): void {
     if (this.product && this.product.productColors) {
-      debugger;
       this.uploadedImages = this.product.productColors.find(f=> f.colorCode === this.selectedColor).images || [];
     }
   }
 
-  getProductDetail() {
+  getProductDetail(): void {
+    this.asyncService.start();
     this.productsService.getProductById(this.productListItem.id).subscribe(response => {
       if (response.success && response.result) {
         this.product = response.result;
         this.filterImagesByColor();
       }
+      this.asyncService.finish();
+    }, error => {
+      this.asyncService.finish();
     });
   }
 
-  changeColor() {
+  changeColor(): void {
     if (this.selectedColor) {
       const colorCode = this.selectedColor.replace('#', '');
       this.uploadUrl = `${environment.API_BASE}/products/${this.productListItem.id}/upload/images/${colorCode}`;
@@ -68,12 +73,22 @@ export class ProductColorImagesComponent implements OnInit {
     }
   }
 
-  updateImages() {
+  updateImages(): void {
     if (this.uploader.fileList.length) {
-      this.uploader.uploadImages(() => {
-        this.utilityService.openSuccessSnackBar('Images uploaded successfully!');
-        this.getProductDetail();
+      this.asyncService.start();
+      this.uploader.uploadImages().subscribe((response) => {
+        if(response.type === HttpEventType.Response) {
+          this.asyncService.finish();
+          this.utilityService.openSuccessSnackBar('Images uploaded successfully!');
+          this.getProductDetail();
+        }
       });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.asyncService) {
+      this.asyncService.finish();
     }
   }
 }
