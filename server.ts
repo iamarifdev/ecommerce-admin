@@ -7,6 +7,7 @@ import * as express from 'express';
 import { join } from 'path';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
+import * as compression from 'compression';
 
 import { AppServerModule } from './src/main.server';
 
@@ -15,6 +16,8 @@ export function app() {
   enableProdMode();
 
   const server = express();
+  server.use(compression());
+
   const distFolder = join(process.cwd(), 'dist/ecommerce-admin/browser');
 
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
@@ -60,7 +63,7 @@ export function app() {
 }
 
 function run() {
-  const port = process.env.PORT || 4000;
+  const port = process.env.PORT || 4001;
 
   // Start up the Node server
   const server = app();

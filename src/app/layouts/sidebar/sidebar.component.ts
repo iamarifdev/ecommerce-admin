@@ -39,6 +39,7 @@ export class SidebarComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.navService.appDrawer = this.appDrawer;
     this.headerMenuService.headerMenu$
+      // tslint:disable-next-line: deprecation
       .pipe(startWith(null), delay(0))
       .subscribe(headerMenu => (this.headerMenu = headerMenu));
   }
