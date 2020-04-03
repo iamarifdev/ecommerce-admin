@@ -8,7 +8,7 @@
   "description": "Ecommerce Admin application",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 5002",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
