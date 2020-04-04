@@ -1,7 +1,10 @@
 export interface AuthUser {
   username: string;
-  companyId?: string;
-  roleId: string;
+  email: string;
+  role: {
+    id: string;
+    name: string;
+  };
   userId: string;
   fullName: string;
   avatarUrl?: string;

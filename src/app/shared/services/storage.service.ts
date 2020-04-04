@@ -19,22 +19,22 @@ export class StorageService {
 
   getAccessToken(): string {
     if (isPlatformServer(this.platformId)) return null;
-    return window.localStorage['accessToken'];
+    return window.localStorage.getItem('accessToken');
   }
 
   saveAccessToken(accessToken: string) {
     if (isPlatformServer(this.platformId)) return;
-    window.localStorage['accessToken'] = accessToken;
+    window.localStorage.setItem('accessToken', accessToken);
   }
 
   getRefreshToken(): string {
     if (isPlatformServer(this.platformId)) return null;
-    return window.localStorage['refreshToken'];
+    return window.localStorage.getItem('refreshToken');
   }
 
   saveRefreshToken(refreshToken: string) {
     if (isPlatformServer(this.platformId)) return;
-    window.localStorage['refreshToken'] = refreshToken;
+    window.localStorage.setItem('refreshToken', refreshToken);
   }
 
   getACL(): any {
@@ -69,10 +69,10 @@ export class StorageService {
     const index = ['en', 'bd'].indexOf(lanCode);
 
     if (index >= 0) {
-      window.localStorage['languageCode'] = lanCode;
+      window.localStorage.setItem('languageCode', lanCode);
       return;
     }
-    window.localStorage['languageCode'] = 'en';
+    window.localStorage.setItem('languageCode', 'en');
   }
 
   destroyAll() {

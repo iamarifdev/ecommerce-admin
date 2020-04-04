@@ -6,6 +6,7 @@ import { map, first } from 'rxjs/operators';
 import { ApiService, StorageService } from '../shared/services';
 import { ApiResponse } from '../models/api-response.model';
 import { AuthUser } from '../models/auth-user.model';
+import { RefreshTokenPair } from '../models/refresh-token-pair.model';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
     return this.apiService
       .post<ApiResponse<AuthUser>>('/auth/login', { username, password })
       .pipe(
-        map(response => {
+        map((response) => {
           if (response && response.success && response.result) {
             this.storageService.saveUser(response.result);
             this.storageService.saveAccessToken(response.result.accessToken);
@@ -38,7 +39,7 @@ export class AuthService {
       .post<ApiResponse>('/auth/logout', { username, refreshToken })
       .pipe(
         first(),
-        map(response => {
+        map((response) => {
           if (response && response.success) {
             this.storageService.destroyAll();
             this.router.navigateByUrl('/auth/login');
@@ -46,6 +47,18 @@ export class AuthService {
           return response;
         })
       );
+  }
+
+  refreshSecurityTokenPair(): Observable<ApiResponse<RefreshTokenPair>> {
+    const user = this.storageService.getUser();
+    const refreshToken = this.storageService.getRefreshToken();
+    const accessToken = this.storageService.getAccessToken();
+
+    return this.apiService.post<ApiResponse<RefreshTokenPair>>('/auth/token/refresh', {
+      userId: user.userId,
+      accessToken,
+      refreshToken,
+    });
   }
 
   get authUser(): AuthUser {

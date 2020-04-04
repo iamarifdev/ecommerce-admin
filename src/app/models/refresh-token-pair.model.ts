@@ -1,4 +1,4 @@
-export class RefreshToken {
+export class RefreshTokenPair {
   userId: string;
   accessToken: string;
   refreshToken: string;

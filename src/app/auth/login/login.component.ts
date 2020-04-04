@@ -17,7 +17,7 @@ import { StorageService, UtilityService } from '../../../app/shared/services';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  showPassword: boolean = false;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       this.authService.authenticate(username, password).subscribe(
         response => {
           if (response && response.success && response.result) {
-            this.router.navigateByUrl('/home');
+            this.router.navigate(['/home']);
             this.utilityService.openSuccessSnackBar(response.message);
           } else {
             this.utilityService.openErrorSnackBar(response.message);

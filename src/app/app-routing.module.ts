@@ -37,8 +37,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
-        // canActivate: [AuthGuard]
+        loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
+        canActivate: [AuthGuard]
       }
     ]
   }
