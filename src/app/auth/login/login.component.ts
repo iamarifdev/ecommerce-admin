@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { fadeInDownOnEnterAnimation, bounceOutDownOnLeaveAnimation } from 'angular-animations';
 
 import { AuthService } from '../auth.service';
-import { StorageService, UtilityService } from '../../../app/shared/services';
+import { StorageService, UtilityService, AsyncService } from '../../../app/shared/services';
 
 @Component({
   selector: 'login',
@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private storageService: StorageService,
     private utilityService: UtilityService,
+    public asyncService: AsyncService,
     private authService: AuthService
   ) {}
 
@@ -39,8 +40,10 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
+      this.asyncService.start();
       this.authService.authenticate(username, password).subscribe(
         response => {
+          this.asyncService.finish();
           if (response && response.success && response.result) {
             this.router.navigate(['/home']);
             this.utilityService.openSuccessSnackBar(response.message);
@@ -49,12 +52,14 @@ export class LoginComponent implements OnInit {
           }
         },
         error => {
+          this.asyncService.finish();
           if (error.error) {
             this.utilityService.openErrorSnackBar(error.error.message);
           }
         }
       );
     } else {
+      this.asyncService.finish();
       this.loginForm.markAsTouched();
       this.loginForm.updateValueAndValidity();
     }

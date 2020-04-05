@@ -61,12 +61,16 @@
       </form>
       <div fxLayout="row" fxLayoutAlign="end">
         <button
+          [disabled]="loginForm.invalid || asyncService.loading"
           class="text-right text-uppercase flex-btn"
           type="submit"
           form="loginForm"
           mat-raised-button
           color="primary"
         >
+          <mat-icon *ngIf="asyncService.loading"
+            ><mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner
+          ></mat-icon>
           Login
         </button>
       </div>

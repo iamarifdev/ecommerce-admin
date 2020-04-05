@@ -20,6 +20,7 @@ import {
   SelectAllOptionComponent,
   SpinnerComponent
 } from './components';
+import { SpinnerDirective } from './directives/spinner.directive';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {
     AccordionLinkDirective,
     AccordionDirective,
     OnlyNumberDirective,
+    SpinnerDirective,
     SumPipe,
     ConcatPipe,
     TimeAgoPipe,
@@ -56,6 +58,7 @@ import {
     AccordionLinkDirective,
     AccordionDirective,
     OnlyNumberDirective,
+    SpinnerDirective,
     SumPipe,
     ConcatPipe,
     TimeAgoPipe,
