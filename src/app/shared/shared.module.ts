@@ -18,13 +18,15 @@ import {
   ConfirmationDialogComponent,
   ProgressBarComponent,
   SelectAllOptionComponent,
-  SpinnerComponent
+  SpinnerComponent,
+  ButtonLoaderComponent
 } from './components';
 import { SpinnerDirective } from './directives/spinner.directive';
 
 @NgModule({
   declarations: [
     SpinnerComponent,
+    ButtonLoaderComponent,
     ParticlesComponent,
     AvatarComponent,
     ConfirmationDialogComponent,
@@ -40,7 +42,7 @@ import { SpinnerDirective } from './directives/spinner.directive';
     TimeAgoPipe,
     TimestampPipe
   ],
-  entryComponents: [ConfirmationDialogComponent],
+  entryComponents: [ConfirmationDialogComponent, ButtonLoaderComponent],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MaterialModule, TranslateModule],
   exports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { SpinnerDirective } from './directives/spinner.directive';
     MaterialModule,
     TranslateModule,
     SpinnerComponent,
+    ButtonLoaderComponent,
     ParticlesComponent,
     AvatarComponent,
     ConfirmationDialogComponent,

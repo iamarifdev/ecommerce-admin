@@ -4,3 +4,4 @@ export * from './particles.component';
 export * from './spinner.component';
 export * from './progress-bar.component';
 export * from './select-all-option.component';
+export * from './button-loader.component';
