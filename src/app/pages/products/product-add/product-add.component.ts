@@ -16,6 +16,7 @@ export class ProductAddComponent implements OnInit {
   public productAddForm: FormGroup;
 
   public sizes: number[] = [];
+  public selectedColor: string[] = [];
 
   @ViewChild('featureImage', { static: true }) featureImage: ElementRef;
 

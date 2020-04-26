@@ -21,7 +21,7 @@ import {
   SpinnerComponent,
   ButtonLoaderComponent
 } from './components';
-import { SpinnerDirective } from './directives/spinner.directive';
+import { SpinnerDirective, BackgroundColorDirective } from './directives';
 
 @NgModule({
   declarations: [
@@ -37,6 +37,7 @@ import { SpinnerDirective } from './directives/spinner.directive';
     AccordionDirective,
     OnlyNumberDirective,
     SpinnerDirective,
+    BackgroundColorDirective,
     SumPipe,
     ConcatPipe,
     TimeAgoPipe,
@@ -62,6 +63,7 @@ import { SpinnerDirective } from './directives/spinner.directive';
     AccordionDirective,
     OnlyNumberDirective,
     SpinnerDirective,
+    BackgroundColorDirective,
     SumPipe,
     ConcatPipe,
     TimeAgoPipe,

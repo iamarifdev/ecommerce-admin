@@ -125,25 +125,27 @@
               </button>
             </div>
             <ng-container [formGroupName]="i">
-              <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
+              <mat-form-field
+                [backgroundColor]="selectedColor[i]"
+                selectorClass="mat-form-field-flex"
+                fxFlex="50"
+                fxFlex.sm="100"
+                fxFlex.xs="100"
+                appearance="fill"
+              >
                 <mat-label>{{ 'PRODUCT.COLOR_CODE' | translate }}</mat-label>
-                <input matInput placeholder="{{ 'PRODUCT.COLOR_CODE' | translate }}" formControlName="colorCode" />
-                <mat-error
-                  *ngIf="
-                    getProductColorControl(i)
-                      .get('colorCode')
-                      .hasError('required')
-                  "
-                >
+                <input
+                  matInput
+                  placeholder="{{ 'PRODUCT.COLOR_CODE' | translate }}"
+                  formControlName="colorCode"
+                  [(ngModel)]="selectedColor[i]"
+                  [(colorPicker)]="selectedColor[i]"
+                  cpOutputFormat="hex"
+                />
+                <mat-error *ngIf="getProductColorControl(i).get('colorCode').hasError('required')">
                   {{ 'PRODUCT.COLOR_CODE_IS_REQUIRED' | translate }}
                 </mat-error>
-                <mat-error
-                  *ngIf="
-                    getProductColorControl(i)
-                      .get('colorCode')
-                      .hasError('pattern')
-                  "
-                >
+                <mat-error *ngIf="getProductColorControl(i).get('colorCode').hasError('pattern')">
                   {{ 'PRODUCT.COLOR_CODE_FORMAT' | translate }}
                 </mat-error>
               </mat-form-field>
@@ -151,13 +153,7 @@
               <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" appearance="fill">
                 <mat-label>{{ 'PRODUCT.COLOR_NAME' | translate }}</mat-label>
                 <input matInput placeholder="{{ 'PRODUCT.COLOR_NAME' | translate }}" formControlName="colorName" />
-                <mat-error
-                  *ngIf="
-                    getProductColorControl(i)
-                      .get('colorName')
-                      .hasError('required')
-                  "
-                >
+                <mat-error *ngIf="getProductColorControl(i).get('colorName').hasError('required')">
                   {{ 'PRODUCT.COLOR_NAME_IS_REQUIRED' | translate }}
                 </mat-error>
               </mat-form-field>
@@ -171,22 +167,10 @@
                   formControlName="inStock"
                   (input)="changeInStock($event, i)"
                 />
-                <mat-error
-                  *ngIf="
-                    getProductColorControl(i)
-                      .get('inStock')
-                      .hasError('required')
-                  "
-                >
+                <mat-error *ngIf="getProductColorControl(i).get('inStock').hasError('required')">
                   {{ 'PRODUCT.IN_STOCK_IS_REQUIRED' | translate }}
                 </mat-error>
-                <mat-error
-                  *ngIf="
-                    getProductColorControl(i)
-                      .get('inStock')
-                      .hasError('min')
-                  "
-                >
+                <mat-error *ngIf="getProductColorControl(i).get('inStock').hasError('min')">
                   {{ 'PRODUCT.IN_STOCK_MIN' | translate }}
                 </mat-error>
               </mat-form-field>
@@ -200,13 +184,7 @@
                   ></select-all-option>
                   <mat-option *ngFor="let size of sizes" [value]="size">{{ size }}</mat-option>
                 </mat-select>
-                <mat-error
-                  *ngIf="
-                    getProductColorControl(i)
-                      .get('sizes')
-                      .hasError('required')
-                  "
-                >
+                <mat-error *ngIf="getProductColorControl(i).get('sizes').hasError('required')">
                   {{ 'PRODUCT.SIZES_IS_REQUIRED' | translate }}
                 </mat-error>
               </mat-form-field>

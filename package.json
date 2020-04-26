@@ -41,6 +41,7 @@
     "compression": "^1.7.4",
     "express": "^4.15.2",
     "localstorage-polyfill": "^1.0.1",
+    "ngx-color-picker": "^9.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.11.1",
     "xmlhttprequest": "^1.8.0",

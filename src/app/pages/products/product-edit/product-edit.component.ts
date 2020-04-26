@@ -19,6 +19,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   public product: IProduct;
 
   public sizes: number[] = [];
+  public selectedColor: string[] = [];
 
   @ViewChild('featureImage', { static: true }) featureImage: ElementRef;
 
@@ -111,6 +112,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       this.asyncService.finish();
       if (response.success && response.result) {
         this.product = response.result;
+        this.selectedColor = this.product.productColors.map(p => p.colorCode);
         this.loadProductEditForm();
       } else {
         this.utilService.openErrorSnackBar('Product not found!');

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
@@ -17,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), SharedModule, DragDropFileUploadModule],
+  imports: [RouterModule.forChild(routes), SharedModule, DragDropFileUploadModule, ColorPickerModule],
   declarations: [ProductListComponent, ProductAddComponent, ProductEditComponent, ProductColorImagesComponent],
   providers: [ProductsService],
   entryComponents: [ProductListComponent, ProductColorImagesComponent]
